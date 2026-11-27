@@ -31,7 +31,8 @@ html[data-codex-prism] body::after {
 }
 #codex-prism-frame { display:none; pointer-events:none; }
 html[data-codex-prism] #codex-prism-frame {
-  display:block; position:fixed; inset:0; z-index:2; opacity:.82;
+  /* 宿主侧栏与 Windows 菜单栏为 z=40；装饰置于其上，原生弹出层与设置面板仍在上方。 */
+  display:block; position:fixed; inset:0; z-index:45; opacity:.82;
   --neri-corner-size:min(280px,24vw,40vh);
   --neri-edge-inset:calc(var(--neri-corner-size) * .928571);
   /* 角纹原始320px、边条36px：共用缩放比例，避免连接处上下错层。 */

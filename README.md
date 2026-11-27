@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.3
+# Neri Desktop Theme 1.1.4
 
 Windows ChatGPT / Codex 桌面外观插件。
 
@@ -45,3 +45,9 @@ python test/frame-pixels.py
 新增随应用切换的浅色主题：柔白淡紫毛玻璃、深紫正文、茜红操作按钮，覆盖侧栏、气泡、输入框、代码块、菜单及悬浮设置；保留壁纸、字体设置与深色样式。选择跟随系统时自动同步。
 
 检查：`npm run test:appearance`、`node test/live-appearance.mjs`。
+
+## 1.1.4
+
+修复侧栏及顶栏遮挡窗口边缘装饰的问题，恢复四边与四角图案。装饰不接收鼠标事件，保留深浅模式配色与原生弹出菜单。
+
+检查：`node test/live-frame-visibility.mjs` 在完整界面比较装饰显示与隐藏时的真实像素，覆盖深浅两种模式；`node test/live-frame.mjs` 与 `python test/frame-pixels.py` 检查宽窄屏上下波纹。
