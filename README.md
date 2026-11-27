@@ -1,6 +1,6 @@
 # Neri Desktop Theme 1.1.2
 
-Windows ChatGPT / Codex 桌面完整外观插件，不需要原 Wallpaper Prism 插件或单独的文字特效脚本。
+Windows ChatGPT / Codex 桌面外观插件。
 
 包含：音理毛玻璃、居中阅读列、导航与文件夹图标、模式字标、实时额度双环、工具栏图标、窗口边框、光标与打字/回复粒子、动态壁纸库、视频播放和悬浮设置。附带当前使用的 6K 音理视频约50MB；本地/Steam其他壁纸仍读取电脑上的原文件。
 
