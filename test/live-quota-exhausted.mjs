@@ -14,12 +14,17 @@ async function shot(name){
  const image=await session.send('Page.captureScreenshot',{format:'png',clip});writeFileSync(new URL('../artifacts/'+name,import.meta.url),Buffer.from(image.data,'base64'));
 }
 try{
+ await session.send('Page.bringToFront');
+ if(await session.evaluate(`document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').getAttribute('aria-expanded')==='true'`)){
+  await session.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await session.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await wait();
+ }
  backup=await session.evaluate(`(()=>{const b=document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]');return{description:b.getAttribute('aria-description'),title:b.getAttribute('title')}})()`);
  const original=await read();check(original.state,'normal');await shot('44-live-quota-normal.png');
  await session.evaluate(`document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').setAttribute('aria-description','5 小时用量：剩余 0%；每周用量：剩余 70%')`);await wait();
  const exhausted=await read();check(exhausted.state,'exhausted');check(exhausted.mark,true);check(exhausted.native,original.native);check(exhausted.rect,original.rect);check(exhausted.pointer,'none');await shot('45-live-quota-exhausted.png');
  const point=await session.evaluate(`(()=>{const r=document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`);
- await session.send('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,...point});await session.send('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point});await wait();
+ await session.send('Input.dispatchMouseEvent',{type:'mouseMoved',...point});await session.send('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,...point});await session.send('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point});
+ for(let attempt=0;attempt<20;attempt++){await wait();if(await session.evaluate(`document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').getAttribute('aria-expanded')==='true'`))break;}
  check(await session.evaluate(`document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').getAttribute('aria-expanded')`),'true');
  await session.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await session.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
  await session.evaluate(`document.querySelector('button[aria-label="用量"],button[aria-label="Usage"]').setAttribute('aria-description','5 小时用量：剩余 80%；每周用量：剩余 0%')`);await wait();check((await read()).state,'exhausted');
