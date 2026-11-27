@@ -26,3 +26,5 @@
 | 设置列表不可因一张预览出错而全部失败；输入必须修改真实样式，状态不能无限停留应用中；入口位于左侧导航 | node test/live-settings.mjs + node test/live-floating.mjs |
 
 | 自定义面板须保留目录/开关/轮换/下一张/恢复/快捷键与窄屏布局，原生蓝色checkbox不得露出 | node test/live-panel-ui.mjs（21项）+ node test/live-floating.mjs |
+
+| 安装不能新增主题快捷方式；已有入口必须使用原生 Codex 用户目录，并追溯旧 Prism 创建记录清理重复入口 | powershell.exe -NoProfile -ExecutionPolicy Bypass -File test/shortcuts.ps1 |

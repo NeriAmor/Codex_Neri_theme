@@ -36,6 +36,11 @@ if ([IO.Path]::GetFullPath($sourceRoot) -ne [IO.Path]::GetFullPath($sourcePlugin
     Copy-Item -LiteralPath (Join-Path $sourceRoot $file) -Destination $sourcePlugin -Force
   }
 }
+# 清理旧发行包留下的外部启动入口；只删除这两个已退役文件。
+foreach ($retiredFile in @('codex\launch.ps1','启动 Codex 壁纸.cmd')) {
+  $retiredPath = Join-Path $sourcePlugin $retiredFile
+  if (Test-Path -LiteralPath $retiredPath -PathType Leaf) { Remove-Item -LiteralPath $retiredPath }
+}
 $mcpPath = Join-Path $sourcePlugin '.mcp.json'
 $mcp = Get-Content -Raw -LiteralPath $mcpPath | ConvertFrom-Json
 $mcp.mcpServers.neri_theme.command = $node
@@ -78,40 +83,14 @@ $backupDir = Join-Path $dataDir 'plugin-shortcut-backup'
 New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
 $recordPath = Join-Path $dataDir 'native-plugin-install.json'
 $previous = if (Test-Path -LiteralPath $recordPath) { Get-Content -Raw -LiteralPath $recordPath | ConvertFrom-Json } else { $null }
-$shell = New-Object -ComObject WScript.Shell
-$shortcutPaths = @((Join-Path ([Environment]::GetFolderPath('Desktop')) 'Codex.lnk'), (Join-Path ([Environment]::GetFolderPath('Programs')) 'Codex.lnk'))
-# 修复用户实际使用的普通 ChatGPT 入口；只匹配本应用，排除 ChatGPT Classic。
-# 使用执行别名而非带版本号的 WindowsApps 路径，避免更新后指向旧版 EXE。
-$normalStartShortcut = Join-Path ([Environment]::GetFolderPath('Programs')) 'ChatGPT.lnk'
-if (-not (Test-Path -LiteralPath $normalStartShortcut)) { $shortcutPaths += $normalStartShortcut }
-$normalShortcutRoots = @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'), (Join-Path $env:APPDATA 'Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar'))
-foreach ($shortcutRoot in $normalShortcutRoots) {
-  foreach ($candidate in @(Get-ChildItem -LiteralPath $shortcutRoot -Filter '*.lnk' -ErrorAction SilentlyContinue)) {
-    $candidateLink = $shell.CreateShortcut($candidate.FullName)
-    if ($candidateLink.TargetPath -eq $nativeAlias -or $candidateLink.TargetPath -match '(?i)[\\/]OpenAI\.Codex_[^\\/]+[\\/]app[\\/]ChatGPT\.exe$') {
-      $shortcutPaths += $candidate.FullName
-    }
-  }
-}
-$shortcutPaths = @($shortcutPaths | Select-Object -Unique)
-$records = @()
-for ($index = 0; $index -lt $shortcutPaths.Count; $index++) {
-  $path = $shortcutPaths[$index]
-  $oldRecord = if ($previous) { @($previous.shortcuts | Where-Object { $_.path -eq $path }) | Select-Object -First 1 } else { $null }
-  $backup = if ($oldRecord) { $oldRecord.backup } else { $null }
-  $created = if ($oldRecord) { [bool]$oldRecord.created } else { -not (Test-Path -LiteralPath $path) }
-  if (-not $oldRecord -and -not $created) { $backup = Join-Path $backupDir ("shortcut-{0}.lnk" -f [Guid]::NewGuid().ToString('N')); Copy-Item -LiteralPath $path -Destination $backup -Force }
-  $shortcut = $shell.CreateShortcut($path)
-  $shortcut.TargetPath = $nativeAlias
-  $shortcut.Arguments = "--remote-debugging-address=127.0.0.1 --remote-debugging-port=$DebugPort"
-  $shortcut.WorkingDirectory = Split-Path -Parent $nativeAlias
-  $shortcut.IconLocation = (Join-Path $package.InstallLocation 'app\resources\icon-chatgpt.ico')
-  $shortcut.Description = 'Codex desktop - Neri Desktop Theme enabled'
-  $shortcut.WindowStyle = 1
-  $shortcut.Save()
-  $records += @{ path = $path; backup = $backup; created = $created }
-}
-$record = @{ pluginId = 'neri-desktop-theme@neri-local'; installedPath = $installed.installedPath; marketplaceRoot = $marketRoot; nativeAlias = $nativeAlias; debugPort = $DebugPort; shortcuts = $records } | ConvertTo-Json -Depth 20
+# 插件只修正已有入口，不添加主题专用入口。
+. (Join-Path $PSScriptRoot 'shortcuts.ps1')
+$legacyRecordPath = Join-Path $legacyData 'native-plugin-install.json'
+$legacyRecord = if (Test-Path -LiteralPath $legacyRecordPath) { Get-Content -Raw -LiteralPath $legacyRecordPath | ConvertFrom-Json } else { $null }
+$nativeProfile = Join-Path $env:APPDATA 'Codex\web\Codex'
+$shortcutRoots = @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'), (Join-Path $env:APPDATA 'Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar'))
+$shortcutResult = Sync-NeriShortcuts -DataDir $dataDir -NativeAlias $nativeAlias -NativeProfile $nativeProfile -DebugPort $DebugPort -ShortcutRoots $shortcutRoots -Previous $previous -Legacy $legacyRecord -IconPath (Join-Path $package.InstallLocation 'app\resources\icon-chatgpt.ico')
+$record = @{ pluginId = 'neri-desktop-theme@neri-local'; installedPath = $installed.installedPath; marketplaceRoot = $marketRoot; nativeAlias = $nativeAlias; debugPort = $DebugPort; nativeProfile = $nativeProfile; shortcuts = @($shortcutResult.shortcuts); removedShortcuts = @($shortcutResult.removedShortcuts) } | ConvertTo-Json -Depth 20
 [IO.File]::WriteAllText($recordPath, $record, $utf8)
 
 # Preserve the existing data and settings while switching to the installed plugin runtime.
@@ -161,7 +140,7 @@ if (Test-Path -LiteralPath $legacyInfoPath) {
   } catch { Write-Warning '旧 Prism 服务未能确认停止，请检查是否还有旧版窗口。' }
 }
 Write-Host ("Installed native plugin: {0}" -f $installed.installedPath)
-Write-Host ("Direct Codex shortcut: {0}" -f $shortcutPaths[0])
-foreach ($path in $shortcutPaths) { Write-Host ("Wallpaper-ready native shortcut: {0}" -f $path) }
-Write-Host 'Open ChatGPT or Codex normally from the repaired shortcuts. No external launcher is needed.'
-Write-Host 'An already-running window without the debug port needs one full exit and reopen. Automatic updater relaunches may also require reopening from a repaired shortcut.'
+Write-Host 'No new application or theme shortcuts were created.'
+foreach ($entry in $shortcutResult.shortcuts) { Write-Host ("Updated existing application shortcut: {0}" -f $entry.path) }
+Write-Host 'Exit all ChatGPT/Codex windows once, then reopen your existing application shortcut.'
+Write-Host 'Theme injection needs the local debug port. A cold start from AppsFolder without launch arguments cannot load the theme.'

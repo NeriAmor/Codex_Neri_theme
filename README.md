@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.0
+# Neri Desktop Theme 1.1.1
 
 Windows ChatGPT / Codex 桌面完整外观插件，不需要原 Wallpaper Prism 插件或单独的文字特效脚本。
 
@@ -9,12 +9,12 @@ Windows ChatGPT / Codex 桌面完整外观插件，不需要原 Wallpaper Prism 
 1. 完整解压，双击“安装.cmd”。需要 Windows、Node.js 22或更新版本，以及已安装的 ChatGPT / Codex桌面端。
 2. 首次安装会迁移本机旧Prism的配置、预设与导入文件，保留原来的选择与玻璃透明度，旧数据不会删除。新数据位于 %USERPROFILE%\.neri-desktop-theme。
 3. 安装器注册 neri-desktop-theme@neri-local，成功激活后禁用旧Prism自动加载，避免重复注入。
-4. 正常从桌面或开始菜单的ChatGPT / Codex快捷方式启动。首次遇到当前窗口没有调试端口时，需完全退出后从修复的快捷方式重新打开。
+4. 安装器只维护已有的 ChatGPT / Codex 快捷方式，不新增桌面或开始菜单入口，并清理旧主题生成的重复入口。首次升级需完全退出所有窗口和托盘进程，再从原有快捷方式打开。
 5. 点击左侧导航的“Neri”或按 Ctrl+Alt+W 打开主题与壁纸设置，可切换文字与光标特效、背景视频、透明度、模糊、声音、轮换和导入素材。
 
 无需保留原Prism、Gemini素材或单独的codex-typing-effects目录。运行插件自身缓存内的代码与资源，运行时无需npm安装。Node.js和桌面宿主仍是必要环境。
 
-应用内部自动更新重启可能丢失调试参数，此时从上述快捷方式重新打开。包没有修改宿主安装文件或绕过CSP。
+主题作为原生插件安装，启用/禁用由插件开关控制。由于宿主插件没有全局样式接口，注入仍依赖原有快捷方式附带的本地调试参数；直接从 Windows 应用列表（AppsFolder）、协议链接或应用内部更新进行无参数冷启动时，无法保证主题生效，需要退出后从已配置的原有快捷方式重新打开。包没有修改宿主安装文件或绕过 CSP。
 
 ## 边线精确对齐
 
@@ -67,3 +67,9 @@ Neri入口移至左侧导航“探索”下方。自动识别Wallpaper Engine创
 目录管理默认折叠，只显示已连接数量；展开后才能看到完整路径与添加文件夹表单。壁纸卡片附带类型角标、来源与选中星芒，宽屏4列、窄窗口2列。保留所有原有设置、导入、搜索、轮换、拖动缩放及Esc/Ctrl+Alt+W交互。
 
 新增真机UI验证：node test/live-panel-ui.mjs。升级后的服务恢复会读取最新安装记录，避免旧缓存路径已被清理后无法启动后台。
+
+## 1.1.1 原有入口与单实例修复
+
+旧版直接调用执行别名时会选择 `chatgpt-desktop` 用户目录，原生应用则使用 `Codex` 目录，因此出现两套实例。现在为已有入口显式设置原生用户目录 `%APPDATA%\Codex\web\Codex`，保留本地调试参数；安装器不再创建任何主题快捷方式。追溯旧 Prism 安装记录，移除其生成的 Codex 桌面/开始菜单入口，保留用户原有的入口及原始备份。旧安装脚本统一转交原生插件安装器，外部启动脚本和启动命令文件已经移除，不再启动第二个桌面应用。
+
+Windows 快捷方式回归检查：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File test/shortcuts.ps1`。

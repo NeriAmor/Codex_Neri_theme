@@ -28,6 +28,6 @@ try{
   const listed=await request('tools/list');assert.equal(listed.tools.length,6);
   const result=await request('tools/call',{name:'neri_status'});assert.ok(!result.isError);
   const status=JSON.parse(result.content[0].text);assert.ok(status.servicePid>0);assert.equal(status.host.connected,true);
-  const report={pluginId:plugin.pluginId,version:plugin.version,enabled:plugin.enabled,mcpLaunchVerified:true,toolCount:listed.tools.length,connected:status.host.connected,cachePath:record.installedPath,limitation:'Cold start through the new direct native application shortcut requires reopening Codex; current app was not terminated.'};
+  const report={pluginId:plugin.pluginId,version:plugin.version,enabled:plugin.enabled,mcpLaunchVerified:true,toolCount:listed.tools.length,connected:status.host.connected,cachePath:record.installedPath,limitation:'Canonical-profile cold start requires fully exiting old instances and reopening the existing application shortcut; current app was not terminated.'};
   writeFileSync(new URL('../artifacts/installed-plugin-report.json',import.meta.url),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
 }finally{child.stdin.end();await new Promise(resolve=>child.exitCode!==null?resolve():child.once('exit',resolve));}

@@ -104,7 +104,7 @@ export function createCodexBridge({ engine, port = 9340, openStudio, onStatus = 
         finally { session?.close(); }
       }
       if (!targets.length) error = '调试端口可用，但未找到 Codex 主窗口';
-    } catch (e) { error = '等待从 Prism 启动器打开 Codex：' + e.message; }
+    } catch (e) { error = '应用尚未开放本地调试端口，请从已配置的原有入口启动：' + e.message; }
     finally {
       lastStatus = { connected: windows > 0, windows, port, error };
       onStatus(lastStatus);
