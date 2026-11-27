@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Neri Sidebar Icon: Library / Cards (双层星夜卡片) -->
+  <defs>
+    <linearGradient id="cardStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F4CBE6"/>
+      <stop offset="100%" stop-color="#B996DC"/>
+    </linearGradient>
+    <linearGradient id="cardBack" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#533E68" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#2D223C" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="cardFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A365D" stop-opacity="0.88"/>
+      <stop offset="100%" stop-color="#291E38" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="cardGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="1" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Back tilted card -->
+  <rect x="11.2" y="5.6" width="14.2" height="16.4" rx="3.2"
+        transform="rotate(9 18.3 13.8)"
+        fill="url(#cardBack)" stroke="#C8B6E0" stroke-opacity="0.68" stroke-width="1.5"/>
+
+  <!-- Front card -->
+  <rect x="6.2" y="9.2" width="14.6" height="16.8" rx="3.2"
+        transform="rotate(-5 13.5 17.6)"
+        fill="url(#cardFront)" stroke="url(#cardStroke)" stroke-width="1.6" filter="url(#cardGlow)"/>
+
+  <!-- Delicate white feather motif inside front card -->
+  <path d="M 10.6,21.4 C 11.4,17.2 13.4,14.5 16.5,13.1 C 15.9,16.5 14.3,19.3 10.6,21.4 Z"
+        fill="#F8E9F7" opacity="0.92"/>
+  <path d="M 10,22.2 C 11.8,18.8 14,15.8 16.2,13.5"
+        fill="none" stroke="#B778B8" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- Tiny star sparkle -->
+  <circle cx="24.5" cy="24" r="1.1" fill="#FAD4EC" opacity="0.85"/>
+</svg>

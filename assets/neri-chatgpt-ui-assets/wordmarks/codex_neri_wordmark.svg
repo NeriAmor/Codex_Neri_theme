@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 180" width="470" height="180">
+  <defs>
+    <!-- Matched pearlescent silver-lavender with soft pink-white glow -->
+    <linearGradient id="neriTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="42%" stop-color="#FBE8F3"/>
+      <stop offset="78%" stop-color="#DBD1EC"/>
+      <stop offset="100%" stop-color="#BFB3D6"/>
+    </linearGradient>
+
+    <radialGradient id="eyeGlow" cx="50%" cy="62%" r="55%">
+      <stop offset="0%" stop-color="#F28AC4" stop-opacity="0.52"/>
+      <stop offset="55%" stop-color="#8B408B" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#2E1B46" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="whiteBowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F4EEF9"/>
+      <stop offset="100%" stop-color="#D2C7E5"/>
+    </linearGradient>
+
+    <linearGradient id="redBowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#DF4F6E"/>
+      <stop offset="55%" stop-color="#B92D4E"/>
+      <stop offset="100%" stop-color="#871C38"/>
+    </linearGradient>
+
+    <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#EFE9F7"/>
+      <stop offset="100%" stop-color="#CFC4E2"/>
+    </linearGradient>
+
+    <radialGradient id="pomGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#453544"/>
+      <stop offset="65%" stop-color="#1E1621"/>
+      <stop offset="100%" stop-color="#0E0A10"/>
+    </radialGradient>
+
+    <filter id="softGlow" x="-15%" y="-20%" width="130%" height="140%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0.08
+                0 0.72 0 0 0.02
+                0 0 1 0 0.14
+                0 0 0 0.55 0" result="tinted"/>
+      <feMerge>
+        <feMergeNode in="tinted"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Subtle pink-violet starry eye glow inside the "o" -->
+  <circle cx="163" cy="107" r="24" fill="url(#eyeGlow)"/>
+
+  <!-- Main horizontal wordmark -->
+  <g filter="url(#softGlow)">
+    <text x="56" y="134"
+          font-family="'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+          font-size="108"
+          font-weight="600"
+          letter-spacing="1.5"
+          fill="url(#neriTextGrad)"
+          stroke="#FFFFFF"
+          stroke-opacity="0.35"
+          stroke-width="1">Codex</text>
+  </g>
+
+  <!-- 1. Neri's dark "×" hairpin clipped on upper-left of "C" -->
+  <g transform="translate(74, 72) rotate(-14)">
+    <rect x="-15" y="-2.6" width="30" height="5.2" rx="2.6" fill="#2A1C28" stroke="#6E5269" stroke-width="0.8" transform="rotate(42)"/>
+    <rect x="-15" y="-2.6" width="30" height="5.2" rx="2.6" fill="#2A1C28" stroke="#6E5269" stroke-width="0.8" transform="rotate(-42)"/>
+  </g>
+
+  <!-- 2. Delicate white feather curving along the bottom-left of "C" -->
+  <g transform="translate(52, 114)">
+    <path d="M 0,0 C 8,19 26,30 56,24 C 38,34 15,28 2,10 Z"
+          fill="url(#featherGrad)" stroke="#9B8FB2" stroke-width="0.9"/>
+    <path d="M -3,-4 C 9,15 27,26 54,23"
+          fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M 16,19 L 12,24 M 27,24 L 24,29 M 38,26 L 36,30"
+          stroke="#A89CBF" stroke-width="0.7" stroke-linecap="round"/>
+  </g>
+
+  <!-- 3. Neri's crimson-berry bow + twin black pom-pom cords at the bottom of "o" -->
+  <g transform="translate(163, 134)">
+    <!-- Twin hanging cords -->
+    <path d="M -2,3 Q -6,16 -9,26" fill="none" stroke="#1E141E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 2,3 Q 6,16 9,26" fill="none" stroke="#1E141E" stroke-width="2" stroke-linecap="round"/>
+    <!-- Fluffy black pom-poms -->
+    <circle cx="-9" cy="28" r="5" fill="url(#pomGrad)" stroke="#554057" stroke-width="0.7"/>
+    <circle cx="9" cy="28" r="5" fill="url(#pomGrad)" stroke="#554057" stroke-width="0.7"/>
+    <!-- Ribbon tails -->
+    <path d="M -2,2 L -12,16 L -5,13 L -3,19 L 0,4 Z" fill="url(#redBowGrad)" stroke="#481424" stroke-width="0.9"/>
+    <path d="M 2,2 L 12,16 L 5,13 L 3,19 L 0,4 Z" fill="url(#redBowGrad)" stroke="#481424" stroke-width="0.9"/>
+    <!-- Left & right bow loops -->
+    <path d="M -2,0 C -13,-10 -20,-4 -18,3 C -16,9 -9,7 -2,2 Z" fill="url(#redBowGrad)" stroke="#481424" stroke-width="0.9"/>
+    <path d="M 2,0 C 13,-10 20,-4 18,3 C 16,9 9,7 2,2 Z" fill="url(#redBowGrad)" stroke="#481424" stroke-width="0.9"/>
+    <path d="M -4,1 C -9,-2 -12,0 -13,2 M 4,1 C 9,-2 12,0 13,2" fill="none" stroke="#F68DA5" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+    <rect x="-3.5" y="-3.5" width="7" height="7" rx="2.2" fill="#C63759" stroke="#481424" stroke-width="0.9"/>
+  </g>
+
+  <!-- 4. Little black cat perched on top of "d" -->
+  <g transform="translate(226, 72)">
+    <!-- Curled tail -->
+    <path d="M 15,2 C 23,-3 24,-15 18,-18 C 14,-20 13,-15 16,-14"
+          fill="none" stroke="#18121E" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 15,2 C 23,-3 24,-15 18,-18 C 14,-20 13,-15 16,-14"
+          fill="none" stroke="#B7A4D4" stroke-width="0.6" stroke-linecap="round" opacity="0.5"/>
+    <!-- Body -->
+    <path d="M -11,4 C -9,-6 7,-7 16,0 C 18,3 16,6 12,6 L -9,6 C -12,6 -12,5 -11,4 Z"
+          fill="#18121E" stroke="#A794C7" stroke-width="0.75"/>
+    <!-- Head & ears -->
+    <path d="M -15,-3 L -14,-13 L -7,-8 C -5,-9 -2,-9 0,-8 L 5,-13 L 6,-2 C 7,4 2,8 -4,8 C -11,8 -16,3 -15,-3 Z"
+          fill="#18121E" stroke="#A794C7" stroke-width="0.75"/>
+    <!-- Cute tiny paws -->
+    <ellipse cx="-7.5" cy="7" rx="3" ry="2.1" fill="#18121E"/>
+    <ellipse cx="1" cy="7" rx="3" ry="2.1" fill="#18121E"/>
+    <!-- Tiny luminous eyes -->
+    <ellipse cx="-9" cy="0" rx="1.3" ry="1.9" fill="#FBE8F3"/>
+    <ellipse cx="-1.5" cy="0" rx="1.3" ry="1.9" fill="#FBE8F3"/>
+  </g>
+
+  <!-- 5. Neri's crisp white satin ribbon bow on top-right of "x" -->
+  <g transform="translate(368, 80) rotate(24)">
+    <!-- Ribbon tails -->
+    <path d="M -2,4 L -18,22 L -9,18 L -6,25 L 0,5 Z" fill="url(#whiteBowGrad)" stroke="#8F82A8" stroke-width="1"/>
+    <path d="M 2,4 L 20,21 L 11,17 L 8,25 L 0,5 Z" fill="url(#whiteBowGrad)" stroke="#8F82A8" stroke-width="1"/>
+    <!-- Left & right loops -->
+    <path d="M -3,0 C -17,-15 -28,-6 -24,4 C -21,12 -11,10 -3,3 Z" fill="url(#whiteBowGrad)" stroke="#8F82A8" stroke-width="1"/>
+    <path d="M 3,0 C 17,-15 28,-6 24,4 C 21,12 11,10 3,3 Z" fill="url(#whiteBowGrad)" stroke="#8F82A8" stroke-width="1"/>
+    <!-- Fold creases -->
+    <path d="M -6,1 C -13,-2 -17,0 -18,3 M 6,1 C 13,-2 17,0 18,3" fill="none" stroke="#B6AACB" stroke-width="0.9" stroke-linecap="round"/>
+    <!-- Center knot -->
+    <rect x="-4.2" y="-4.2" width="8.4" height="8.4" rx="2.8" fill="#FFFFFF" stroke="#8F82A8" stroke-width="1"/>
+  </g>
+
+  <!-- 6. Starry-night four-point sparkles -->
+  <g filter="url(#starGlow)">
+    <path d="M 396,44 L 398.4,54 L 408,56.4 L 398.4,58.8 L 396,68.8 L 393.6,58.8 L 384,56.4 L 393.6,54 Z" fill="#FFF7FC"/>
+    <path d="M 130,46 L 131.4,52 L 137,53.4 L 131.4,54.8 L 130,60.8 L 128.6,54.8 L 123,53.4 L 128.6,52 Z" fill="#F5E6FF" opacity="0.9"/>
+    <path d="M 386,120 L 387.2,125 L 392,126.2 L 387.2,127.4 L 386,132.4 L 384.8,127.4 L 380,126.2 L 384.8,125 Z" fill="#F5E6FF" opacity="0.85"/>
+    <circle cx="163" cy="107" r="1.5" fill="#FFF2FA" opacity="0.85"/>
+    <circle cx="136" cy="146" r="1.4" fill="#E8D8FF" opacity="0.75"/>
+  </g>
+</svg>

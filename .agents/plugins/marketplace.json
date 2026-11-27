@@ -1,0 +1,20 @@
+{
+  "name": "neri-local",
+  "interface": {
+    "displayName": "Neri Desktop Theme Local"
+  },
+  "plugins": [
+    {
+      "name": "neri-desktop-theme",
+      "source": {
+        "source": "local",
+        "path": "../../"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

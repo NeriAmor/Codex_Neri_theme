@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 400" width="36" height="400">
+  <!-- Neri Seamless Vertical Edge Trim (repeat-y for left & right edges) -->
+  <defs>
+    <linearGradient id="evGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D8C2EC" stop-opacity="0.32"/>
+      <stop offset="50%" stop-color="#F7DAF0" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#D8C2EC" stop-opacity="0.32"/>
+    </linearGradient>
+  </defs>
+  <!-- Fine railway line -->
+  <line x1="10" y1="0" x2="10" y2="400" stroke="url(#evGrad)" stroke-width="1.2"/>
+  <line x1="17" y1="0" x2="17" y2="400" stroke="#D8C2EC" stroke-opacity="0.24" stroke-width="0.8" stroke-dasharray="3 7"/>
+  <!-- Gentle scalloped cape-lace wave -->
+  <path d="M 17,0 Q 25,20 17,40 Q 25,60 17,80 Q 25,100 17,120 Q 25,140 17,160 Q 25,180 17,200 Q 25,220 17,240 Q 25,260 17,280 Q 25,300 17,320 Q 25,340 17,360 Q 25,380 17,400"
+        fill="none" stroke="url(#evGrad)" stroke-width="0.9"/>
+  <!-- Center tiny 4-point star & subtle × stitches -->
+  <path d="M 24,195 L 25,199 L 29,200 L 25,201 L 24,205 L 23,201 L 19,200 L 23,199 Z" fill="#FFF3FC" opacity="0.65"/>
+  <g stroke="#F2CBE6" stroke-opacity="0.45" stroke-width="1" stroke-linecap="round">
+    <line x1="21" y1="97" x2="26" y2="103"/>
+    <line x1="26" y1="97" x2="21" y2="103"/>
+    <line x1="21" y1="297" x2="26" y2="303"/>
+    <line x1="26" y1="297" x2="21" y2="303"/>
+  </g>
+  <circle cx="24" cy="40" r="1" fill="#F8E6FF" opacity="0.45"/>
+  <circle cx="24" cy="160" r="1" fill="#F8E6FF" opacity="0.45"/>
+  <circle cx="24" cy="240" r="1" fill="#F8E6FF" opacity="0.45"/>
+  <circle cx="24" cy="360" r="1" fill="#F8E6FF" opacity="0.45"/>
+</svg>

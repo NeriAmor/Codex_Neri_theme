@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Neri Top-Right Icon 3: Outline / List / Activity (星轨目录清单) -->
+  <defs>
+    <linearGradient id="listLine" gradientUnits="userSpaceOnUse" x1="13" y1="16" x2="25" y2="16">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#EAD8F6"/>
+      <stop offset="100%" stop-color="#BA9CE0"/>
+    </linearGradient>
+    <radialGradient id="listStar" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FAB8DF"/>
+      <stop offset="100%" stop-color="#CC62AE"/>
+    </radialGradient>
+    <filter id="listGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="0.9" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 3 crisp lines -->
+  <g stroke="url(#listLine)" stroke-width="1.8" stroke-linecap="round">
+    <line x1="13" y1="9.6" x2="25" y2="9.6"/>
+    <line x1="13" y1="16" x2="25" y2="16"/>
+    <line x1="13" y1="22.4" x2="22.2" y2="22.4"/>
+  </g>
+
+  <!-- Starlight bullets on the left -->
+  <g filter="url(#listGlow)">
+    <path d="M 8.2,7.2 L 9,9 L 10.8,9.6 L 9,10.2 L 8.2,12 L 7.4,10.2 L 5.6,9.6 L 7.4,9 Z" fill="url(#listStar)"/>
+    <circle cx="8.2" cy="16" r="1.7" fill="#F8CBE6"/>
+    <circle cx="8.2" cy="22.4" r="1.7" fill="#D9B8EE"/>
+  </g>
+</svg>

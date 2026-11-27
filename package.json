@@ -1,0 +1,26 @@
+{
+  "name": "neri-desktop-theme",
+  "version": "1.1.0",
+  "description": "独立音理桌面主题：动态壁纸、毛玻璃、图标、边框、光标与文字粒子特效",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/NeriAmor/Codex_Neri_theme#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeriAmor/Codex_Neri_theme.git"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "start": "node codex/server.mjs --open",
+    "install:local": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File codex/install-plugin.ps1",
+    "test": "node --test test/codex.test.mjs",
+    "test:browser": "node test/browser.mjs",
+    "test:plugin": "node --test test/native-plugin.test.mjs",
+    "restore": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File codex/restore.ps1"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.1"
+  }
+}

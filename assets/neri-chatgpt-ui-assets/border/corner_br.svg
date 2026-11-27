@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <!-- Neri Window Border: Bottom-Right Corner (星轨蕾丝 + 守望星空的小黑猫) -->
+  <defs>
+    <linearGradient id="brLine" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F7ECFA" stop-opacity="0.72"/>
+      <stop offset="50%" stop-color="#D8BBE8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#9A7AC0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="brPink" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F8B8DD" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#B06AC4" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="brGlow" cx="88%" cy="88%" r="65%">
+      <stop offset="0%" stop-color="#E8A2D4" stop-opacity="0.16"/>
+      <stop offset="55%" stop-color="#9B6AC8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#181526" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="320" height="320" fill="url(#brGlow)"/>
+
+  <!-- Outer double starry-railway frame lines -->
+  <!-- 边线与波纹改由同一全窗口SVG绘制，避免角纹接缝错位。 -->
+  <!-- Sweeping constellation orbit arcs -->
+  <path d="M 302,156 C 278,202 234,258 156,302"
+        fill="none" stroke="url(#brPink)" stroke-width="1.15" stroke-linecap="round"/>
+  <path d="M 298,194 C 272,232 232,272 194,298"
+        fill="none" stroke="url(#brLine)" stroke-width="0.9" stroke-dasharray="2 4"/>
+
+  <!-- Dreamy translucent black cat perched on the starry arc gazing at a star -->
+  <g transform="translate(262, 260)" opacity="0.72">
+    <!-- Curled tail -->
+    <path d="M 13,4 C 21,0 23,-11 17,-15 C 14,-17 12,-13 15,-12"
+          fill="none" stroke="#E8D8F5" stroke-width="2.2" stroke-linecap="round" opacity="0.7"/>
+    <!-- Body -->
+    <path d="M -10,6 C -8,-4 6,-5 14,2 C 16,5 14,8 10,8 L -8,8 C -11,8 -11,7 -10,6 Z"
+          fill="#22192E" fill-opacity="0.78" stroke="#EBD8F8" stroke-width="1"/>
+    <!-- Head & ears -->
+    <path d="M -13,-1 L -12,-11 L -6,-6 C -4,-7 -1,-7 1,-6 L 5,-11 L 6,0 C 7,5 2,9 -3,9 C -9,9 -14,4 -13,-1 Z"
+          fill="#22192E" fill-opacity="0.78" stroke="#EBD8F8" stroke-width="1"/>
+    <!-- Tiny starry eyes -->
+    <ellipse cx="-7.5" cy="1.5" rx="1.2" ry="1.7" fill="#FFEAF6"/>
+    <ellipse cx="-1" cy="1.5" rx="1.2" ry="1.7" fill="#FFEAF6"/>
+  </g>
+
+  <!-- Four-point starlight sparkles & stardust -->
+  <g fill="#FFF5FC">
+    <path d="M 226,238 L 227.6,243.4 L 233,245 L 227.6,246.6 L 226,252 L 224.4,246.6 L 219,245 L 224.4,243.4 Z" opacity="0.82"/>
+    <path d="M 284,196 L 285,200 L 289,201 L 285,202 L 284,206 L 283,202 L 279,201 L 283,200 Z" opacity="0.68"/>
+    <path d="M 192,282 L 193,286 L 197,287 L 193,288 L 192,292 L 191,288 L 187,287 L 191,286 Z" opacity="0.65"/>
+    <circle cx="246" cy="212" r="1.4" opacity="0.55"/>
+    <circle cx="152" cy="292" r="1.1" opacity="0.45"/>
+    <circle cx="292" cy="160" r="1.1" opacity="0.45"/>
+  </g>
+</svg>

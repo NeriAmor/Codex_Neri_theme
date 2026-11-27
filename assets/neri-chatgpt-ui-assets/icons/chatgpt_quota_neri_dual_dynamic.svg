@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"
+     style="--quota-5h: 94; --quota-week: 28;">
+  <!--
+    Neri Dual Dynamic Quota Ring:
+    Upper arc = 5-hour quota (CSS var quota-5h, 0 to 100)
+    Lower arc = Weekly quota (CSS var quota-week, 0 to 100)
+    Optional attribute data-focus="5h" or data-focus="week" highlights the active arc.
+  -->
+  <style>
+    .arc-fill {
+      transition: stroke-dashoffset 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+    }
+    .arc-group {
+      transition: opacity 0.2s ease;
+    }
+    svg[data-focus="5h"] .group-week { opacity: 0.45; }
+    svg[data-focus="week"] .group-5h { opacity: 0.45; }
+  </style>
+
+  <defs>
+    <!-- Upper 5h arc: bright pearlescent white to Neri rose-pink -->
+    <linearGradient id="grad5h" x1="15%" y1="0%" x2="85%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FAD0EA"/>
+      <stop offset="100%" stop-color="#E48EC9"/>
+    </linearGradient>
+
+    <!-- Lower Weekly arc: dreamy silver-lavender to Neri twilight violet -->
+    <linearGradient id="gradWeek" x1="10%" y1="50%" x2="90%" y2="50%">
+      <stop offset="0%" stop-color="#F6EEFF"/>
+      <stop offset="50%" stop-color="#D4A6F5"/>
+      <stop offset="100%" stop-color="#A674DE"/>
+    </linearGradient>
+
+    <!-- Center 4-point star crystal: Neri eye gradient -->
+    <radialGradient id="neriStarGem" cx="45%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#F9B4DB"/>
+      <stop offset="75%" stop-color="#C44E92"/>
+      <stop offset="100%" stop-color="#6B255E"/>
+    </radialGradient>
+
+    <!-- Mini crimson bow -->
+    <linearGradient id="miniCrimson" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E55474"/>
+      <stop offset="60%" stop-color="#B82A4C"/>
+      <stop offset="100%" stop-color="#831934"/>
+    </linearGradient>
+
+    <filter id="neriGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.7" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Subtle starry inner aura -->
+  <circle cx="32" cy="29" r="16" fill="#C874B8" opacity="0.1"/>
+
+  <!-- UPPER ARC: 5-Hour Quota (spans -145 deg to -35 deg, fills left to right) -->
+  <g id="group-5h" class="arc-group group-5h">
+    <path id="arc-5h-track"
+          d="M 14.8,16.95 A 21,21 0 0,1 49.2,16.95"
+          fill="none"
+          stroke="#9584AD"
+          stroke-opacity="0.32"
+          stroke-width="4.2"
+          stroke-linecap="round"/>
+    <path id="arc-5h-fill"
+          class="arc-fill"
+          d="M 14.8,16.95 A 21,21 0 0,1 49.2,16.95"
+          pathLength="100"
+          fill="none"
+          stroke="url(#grad5h)"
+          stroke-width="4.2"
+          stroke-linecap="round"
+          stroke-dasharray="100 100"
+          stroke-dashoffset="6"
+          style="stroke-dashoffset: calc(100 - var(--quota-5h, 94));"
+          filter="url(#neriGlow)"/>
+  </g>
+
+  <!-- LOWER ARC: Weekly Quota (spans 172 deg CCW through bottom to 8 deg, fills left to right) -->
+  <g id="group-week" class="arc-group group-week">
+    <path id="arc-week-track"
+          d="M 11.2,31.92 A 21,21 0 0,0 52.8,31.92"
+          fill="none"
+          stroke="#9584AD"
+          stroke-opacity="0.32"
+          stroke-width="4.2"
+          stroke-linecap="round"/>
+    <path id="arc-week-fill"
+          class="arc-fill"
+          d="M 11.2,31.92 A 21,21 0 0,0 52.8,31.92"
+          pathLength="100"
+          fill="none"
+          stroke="url(#gradWeek)"
+          stroke-width="4.2"
+          stroke-linecap="round"
+          stroke-dasharray="100 100"
+          stroke-dashoffset="72"
+          style="stroke-dashoffset: calc(100 - var(--quota-week, 28));"
+          filter="url(#neriGlow)"/>
+  </g>
+
+  <!-- Tiny starlight nodes separating upper 5h & lower weekly arcs -->
+  <circle cx="11.8" cy="23.2" r="1.4" fill="#FFF2FA" opacity="0.85" filter="url(#neriGlow)"/>
+  <circle cx="52.2" cy="23.2" r="1.4" fill="#FFF2FA" opacity="0.85" filter="url(#neriGlow)"/>
+
+  <!-- Center Neri 4-point star-crystal -->
+  <g id="center-star" filter="url(#neriGlow)">
+    <path d="M 32,17.2 L 35.2,25.8 L 43.8,29 L 35.2,32.2 L 32,40.8 L 28.8,32.2 L 20.2,29 L 28.8,25.8 Z"
+          fill="url(#neriStarGem)" stroke="#FFF3FA" stroke-width="0.9" stroke-linejoin="round"/>
+    <circle cx="32" cy="29" r="2.1" fill="#FFFFFF" opacity="0.92"/>
+  </g>
+
+  <!-- Signature mini crimson bow pendant below the lower arc (does not obstruct weekly bar) -->
+  <g transform="translate(32, 55.2)">
+    <path d="M -1,1.2 L -3.1,5.2 M 1,1.2 L 3.1,5.2" stroke="#221726" stroke-width="0.95" stroke-linecap="round"/>
+    <circle cx="-3.4" cy="6.2" r="1.65" fill="#1C1420" stroke="#7A6284" stroke-width="0.5"/>
+    <circle cx="3.4" cy="6.2" r="1.65" fill="#1C1420" stroke="#7A6284" stroke-width="0.5"/>
+    <path d="M -1,0 C -5.5,-4 -9.2,-1.8 -8.3,1.1 C -7.4,3.6 -3.8,3.2 -1,0.9 Z" fill="url(#miniCrimson)" stroke="#4A1426" stroke-width="0.65"/>
+    <path d="M 1,0 C 5.5,-4 9.2,-1.8 8.3,1.1 C 7.4,3.6 3.8,3.2 1,0.9 Z" fill="url(#miniCrimson)" stroke="#4A1426" stroke-width="0.65"/>
+    <rect x="-1.6" y="-1.6" width="3.2" height="3.2" rx="1.1" fill="#D43B5E" stroke="#4A1426" stroke-width="0.65"/>
+  </g>
+</svg>

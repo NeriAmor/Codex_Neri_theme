@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <!-- Neri Window Border: Top-Left Corner (星轨蕾丝 + 白羽毛 + ×发卡) -->
+  <defs>
+    <linearGradient id="tlLine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7ECFA" stop-opacity="0.72"/>
+      <stop offset="50%" stop-color="#D8BBE8" stop-opacity="0.46"/>
+      <stop offset="100%" stop-color="#9A7AC0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tlPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8B8DD" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#B06AC4" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="tlGlow" cx="12%" cy="12%" r="65%">
+      <stop offset="0%" stop-color="#E8A2D4" stop-opacity="0.16"/>
+      <stop offset="55%" stop-color="#9B6AC8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#181526" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Soft corner starlight vignette -->
+  <rect width="320" height="320" fill="url(#tlGlow)"/>
+
+  <!-- Outer double starry-railway frame lines -->
+  <!-- 边线与波纹改由同一全窗口SVG绘制，避免角纹接缝错位。 -->
+  <!-- Sweeping constellation orbit arcs -->
+  <path d="M 18,164 C 42,118 86,62 164,18"
+        fill="none" stroke="url(#tlPink)" stroke-width="1.15" stroke-linecap="round"/>
+  <path d="M 22,126 C 48,88 88,48 126,22"
+        fill="none" stroke="url(#tlLine)" stroke-width="0.9" stroke-dasharray="2 4"/>
+
+  <!-- Delicate white feather nestled in top-left scroll -->
+  <g transform="translate(36, 48) rotate(-38)" opacity="0.72">
+    <path d="M 0,4 C 14,-6 34,-8 52,0 C 36,10 16,12 0,4 Z"
+          fill="#F5EAF9" fill-opacity="0.22" stroke="#F6E6FA" stroke-width="1"/>
+    <path d="M -4,4 C 14,1 32,0 50,0" fill="none" stroke="#FFFFFF" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M 16,2 L 13,-2 M 26,1 L 24,-4 M 36,0 L 34,-3 M 20,4 L 18,8 M 32,3 L 30,7"
+          stroke="#E8D6F5" stroke-width="0.65" stroke-linecap="round"/>
+  </g>
+
+  <!-- Signature subtle "×" hairpin cross-stitch ornament -->
+  <g transform="translate(86, 42) rotate(-14)" opacity="0.65">
+    <line x1="-6" y1="-4.5" x2="6" y2="4.5" stroke="#F8D2EA" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-6" y1="4.5" x2="6" y2="-4.5" stroke="#F8D2EA" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Four-point starlight sparkles & stardust -->
+  <g fill="#FFF5FC">
+    <path d="M 26,26 L 27.6,31.4 L 33,33 L 27.6,34.6 L 26,40 L 24.4,34.6 L 19,33 L 24.4,31.4 Z" opacity="0.82"/>
+    <path d="M 118,34 L 119,38 L 123,39 L 119,40 L 118,44 L 117,40 L 113,39 L 117,38 Z" opacity="0.68"/>
+    <path d="M 38,118 L 39,122 L 43,123 L 39,124 L 38,128 L 37,124 L 33,123 L 37,122 Z" opacity="0.68"/>
+    <circle cx="62" cy="76" r="1.5" opacity="0.6"/>
+    <circle cx="152" cy="28" r="1.2" opacity="0.5"/>
+    <circle cx="28" cy="152" r="1.2" opacity="0.5"/>
+    <circle cx="198" cy="22" r="1" opacity="0.4"/>
+    <circle cx="22" cy="198" r="1" opacity="0.4"/>
+  </g>
+</svg>

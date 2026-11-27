@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Neri Project Folder: Open / Expanded (展开文件夹) -->
+  <defs>
+    <linearGradient id="fOpenBack" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5A426E"/>
+      <stop offset="100%" stop-color="#352546"/>
+    </linearGradient>
+    <linearGradient id="fOpenFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#75558C" stop-opacity="0.92"/>
+      <stop offset="55%" stop-color="#4D3762" stop-opacity="0.94"/>
+      <stop offset="100%" stop-color="#322342" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="fOpenEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#F6CBE6"/>
+      <stop offset="100%" stop-color="#BD9BE0"/>
+    </linearGradient>
+    <filter id="fOpenGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="0.9" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Back folder body with tab -->
+  <path d="M 4.5,10.2 C 4.5,8.6 5.8,7.4 7.4,7.4 L 12.2,7.4 C 13.1,7.4 13.9,7.9 14.4,8.6 L 15.6,10.2 L 24.4,10.2 C 25.9,10.2 27,11.4 27,12.8 L 27,23.2 C 27,24.7 25.8,25.8 24.3,25.8 L 7.2,25.8 C 5.7,25.8 4.5,24.6 4.5,23.1 Z"
+        fill="url(#fOpenBack)" stroke="#D4C2EA" stroke-opacity="0.7" stroke-width="1.2"/>
+
+  <!-- Luminous starlight sheet peeking out -->
+  <path d="M 8.2,13.6 L 23.6,13.6 L 23.6,11.8 C 23.6,11.1 23,10.6 22.3,10.6 L 9.5,10.6 C 8.8,10.6 8.2,11.1 8.2,11.8 Z"
+        fill="#FCEAF6" opacity="0.88"/>
+
+  <!-- Open tilted front flap -->
+  <path d="M 6.4,13.8 L 26.8,13.8 C 28,13.8 28.8,14.9 28.5,16.1 L 26.4,24 C 26.1,25.1 25.1,25.8 24,25.8 L 6.2,25.8 C 5,25.8 4.2,24.7 4.5,23.6 L 6.4,13.8 Z"
+        fill="url(#fOpenFront)" stroke="url(#fOpenEdge)" stroke-width="1.4" stroke-linejoin="round" filter="url(#fOpenGlow)"/>
+
+  <!-- Tiny 4-point Neri star embossed on front flap -->
+  <path d="M 16.4,16.8 L 17.2,19 L 19.4,19.8 L 17.2,20.6 L 16.4,22.8 L 15.6,20.6 L 13.4,19.8 L 15.6,19 Z"
+        fill="#FDE8F5" opacity="0.92"/>
+</svg>

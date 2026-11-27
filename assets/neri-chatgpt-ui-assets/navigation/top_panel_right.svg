@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Neri Top-Right Icon 4: Right Panel Toggle (星夜右侧栏开关) -->
+  <defs>
+    <linearGradient id="panelEdge" gradientUnits="userSpaceOnUse" x1="6" y1="7" x2="26" y2="25">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F2CBE6"/>
+      <stop offset="100%" stop-color="#B593DC"/>
+    </linearGradient>
+    <linearGradient id="panelFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E892CA" stop-opacity="0.48"/>
+      <stop offset="100%" stop-color="#8A4FA8" stop-opacity="0.38"/>
+    </linearGradient>
+    <filter id="panelGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="0.9" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Right sidebar highlight pane -->
+  <path d="M 19,7.6 L 23.4,7.6 C 24.9,7.6 26.2,8.9 26.2,10.4 L 26.2,21.6 C 26.2,23.1 24.9,24.4 23.4,24.4 L 19,24.4 Z"
+        fill="url(#panelFill)"/>
+
+  <!-- Outer window frame -->
+  <rect x="5.8" y="7.4" width="20.4" height="17.2" rx="3.4"
+        fill="#2B203B" fill-opacity="0.38" stroke="url(#panelEdge)" stroke-width="1.65" filter="url(#panelGlow)"/>
+
+  <!-- Vertical divider -->
+  <line x1="19" y1="7.8" x2="19" y2="24.2" stroke="url(#panelEdge)" stroke-width="1.5"/>
+
+  <!-- Tiny 4-point star inside right pane -->
+  <path d="M 22.6,13.6 L 23.2,15.4 L 25,16 L 23.2,16.6 L 22.6,18.4 L 22,16.6 L 20.2,16 L 22,15.4 Z"
+        fill="#FFF3FC"/>
+</svg>

@@ -1,0 +1,304 @@
+/* 音理主题：真实 Codex DOM 的语义标记。仅启用壁纸时生效，恢复按钮仍可撤销。 */
+:root {
+  --neri-chrome: rgba(20, 19, 34, var(--neri-opacity,.72));
+  --neri-ai: rgba(27, 25, 46, max(.60,var(--neri-opacity,.76)));
+  --neri-user: rgba(56, 39, 53, max(.65,var(--neri-opacity,.80)));
+  --neri-input: rgba(22, 21, 38, max(.80,var(--neri-opacity,.88)));
+  --neri-code: rgba(24, 22, 41, .90);
+  --neri-code-header: #24213B;
+  --neri-accent: #E87DA6;
+  --neri-action: #C94A61;
+  --neri-action-hover: #DF5E75;
+  --neri-star: #F4D59A;
+  --neri-text: #EDE6F0;
+  --neri-muted: #A99FB8;
+  --neri-edge: rgba(255, 249, 252, .10);
+  --neri-overlay-blend: normal;
+  /* 素材 URL 由 inject.js 使用 payload.neriAssetBase 集中生成，兼容 app://fs/@fs/。 */
+  /* 一键切滤色版：在 .mcp.json 的 env 设 CODEX_PRISM_NERI_OVERLAY_MODE=screen，
+     重载插件；自动改用 overlays/screen 与 -screen.png。
+     等效写法：mix-blend-mode: screen。无需改壁纸路径。 */
+}
+
+/* 中央文字区略深、两侧通透；装饰不接收点击或选中文字。 */
+html[data-codex-prism] #codex-prism-stage::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(16,15,28,.15) 0%, rgba(16,15,28,.42) 50%, rgba(16,15,28,.15) 100%);
+}
+html[data-codex-prism] body::after {
+  /* 新 SVG 边缘取代旧的全屏卷草 PNG，避免两层花框叠加。 */
+  content:none; background:none; pointer-events:none;
+}
+#codex-prism-frame { display:none; pointer-events:none; }
+html[data-codex-prism] #codex-prism-frame {
+  display:block; position:fixed; inset:0; z-index:2; opacity:.82;
+  --neri-corner-size:min(280px,24vw,40vh);
+  --neri-edge-inset:calc(var(--neri-corner-size) * .928571);
+  /* 角纹原始320px、边条36px：共用缩放比例，避免连接处上下错层。 */
+  --neri-trim-size:calc(var(--neri-corner-size) * .1125);
+  pointer-events:none;
+}
+#codex-prism-frame > [data-neri-frame-piece] { position:absolute; pointer-events:none; }
+#codex-prism-frame > [data-neri-frame-piece^="corner-"] {
+  width:var(--neri-corner-size); height:var(--neri-corner-size);
+  background-position:center; background-size:contain; background-repeat:no-repeat;
+}
+#codex-prism-frame > [data-neri-frame-piece="corner-tl"] { top:0; left:0; background-image:var(--neri-corner-tl); }
+#codex-prism-frame > [data-neri-frame-piece="corner-tr"] { top:0; right:0; background-image:var(--neri-corner-tr); }
+#codex-prism-frame > [data-neri-frame-piece="corner-bl"] { bottom:0; left:0; background-image:var(--neri-corner-bl); }
+#codex-prism-frame > [data-neri-frame-piece="corner-br"] { bottom:0; right:0; background-image:var(--neri-corner-br); }
+#codex-prism-frame > svg[data-neri-frame-lines] { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+html[data-codex-prism] body { color: var(--neri-text); }
+html[data-codex-prism] [data-app-shell-frame] {
+  --color-text-default: var(--neri-text); --color-text-primary: var(--neri-text);
+  --color-text-secondary: var(--neri-muted); --color-text-tertiary: var(--neri-muted);
+}
+/* 字体族、字号、字重由应用设置负责，主题不覆盖用户字体。 */
+html[data-codex-prism] :is(#app-shell-sidebar,[data-app-shell-titlebar],[data-app-shell-application-menu-bar]) {
+  background: var(--neri-chrome)!important;
+  backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%);
+  -webkit-backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%);
+  color: var(--neri-text)!important; border-color: var(--neri-edge)!important;
+}
+html[data-codex-prism] :is([data-sidebar-navigation-root],[data-slate-sidebar-content],[data-app-navigation-rail]) { background: transparent!important; }
+html[data-codex-prism] [data-app-shell-titlebar]::after {
+  content: ""; position: absolute; inset: auto 0 -2px; height: 6px;
+  background: var(--neri-lace) center / 100% 6px no-repeat;
+  opacity: .22; pointer-events: none; mix-blend-mode: var(--neri-overlay-blend);
+}
+
+html[data-codex-prism] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]) {
+  color: var(--neri-text)!important; line-height: 1.75!important;
+  text-shadow: 0 1px 2px rgba(10,9,20,.55);
+}
+html[data-codex-prism] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]:not(:empty),[data-composer-surface-variant]) {
+  color: var(--neri-text)!important;
+  backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%)!important;
+  -webkit-backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%)!important;
+  border: 1px solid var(--neri-edge)!important; border-radius: 16px!important;
+  box-shadow: inset 0 1px 0 rgba(255,249,252,.08), 0 6px 20px rgba(10,9,20,.10)!important;
+}
+html[data-codex-prism] [data-markdown-text-style="assistant-message"]:not(:empty) {
+  background: var(--neri-ai)!important; padding: 14px 18px;
+}
+html[data-codex-prism] [data-user-message-bubble] {
+  background: var(--neri-user)!important; border-color: rgba(232,125,166,.12)!important;
+}
+html[data-codex-prism] [data-composer-surface-variant][data-composer-surface-variant] {
+  position: relative!important; overflow:visible!important; isolation: isolate; background: var(--neri-input)!important;
+  color: var(--neri-text)!important; border-color: rgba(255,249,252,.12)!important;
+  border-radius: 24px!important; caret-color: var(--neri-accent);
+}
+/* 该节点包含输入区和全部操作按钮；纯 CSS 外圈随多行高度伸缩。 */
+html[data-codex-prism] [data-composer-surface-variant]::before {
+  content:""; position:absolute; inset:-3px -6px!important;
+  border:1px solid rgba(255,249,252,.10)!important; border-radius:27px;
+  background:transparent!important; box-shadow:0 0 8px rgba(232,125,166,.06)!important;
+  pointer-events:none; z-index:-1;
+}
+html[data-codex-prism] [data-composer-surface-variant]::after {
+  content: ""; position: absolute; inset:auto 24px -3px!important;
+  height:5px; border-radius:0; pointer-events: none;
+  /* PNG 只保留胶囊下缘外侧的 5px 微光，不再绘制穿过按钮的图片框。 */
+  background: var(--neri-trim) center bottom / 100% auto no-repeat;
+  opacity: .4; filter: brightness(.45); z-index: -1;
+  mix-blend-mode: var(--neri-overlay-blend);
+}
+html[data-codex-prism] [data-composer-surface-variant]:focus-within {
+  box-shadow: 0 0 0 1px rgba(232,125,166,.20), 0 0 12px rgba(232,125,166,.08)!important;
+}
+html[data-codex-prism] :is(#prompt-textarea,[data-codex-composer],[data-composer-surface-variant] button) { color: var(--neri-text)!important; }
+html[data-codex-prism] :is(input,textarea)::placeholder,
+html[data-codex-prism] [data-composer-surface-variant] [data-placeholder]::before { color: var(--neri-muted)!important; opacity: 1!important; }
+html[data-codex-prism] [data-composer-surface-variant] [data-composer-navigation-target] { color: var(--neri-muted)!important; }
+html[data-codex-prism] [data-composer-surface-variant] [data-composer-navigation-target] * { color: inherit!important; }
+
+/* 对话与输入栏始终居中，宽屏最大 860px，窄屏保留两侧安全间距。 */
+html[data-codex-prism] :is([data-thread-user-message-navigation-content],[data-thread-composer-backdrop]) {
+  box-sizing: border-box; max-width: 860px!important; min-width: 0;
+  width: calc(100% - 32px)!important; margin-inline: auto!important;
+}
+
+/* 侧栏选中态使用现有 aria-current / action-selected，不按标题猜测会话。 */
+html[data-codex-prism] #app-shell-sidebar :is([aria-current="page"],[data-app-action-sidebar-thread-selected="true"]) {
+  position: relative; border-radius: 10px!important;
+  background: linear-gradient(90deg,rgba(232,125,166,.22),rgba(123,75,148,.08))!important;
+  color: var(--neri-text)!important;
+}
+html[data-codex-prism] #app-shell-sidebar :is([aria-current="page"],[data-app-action-sidebar-thread-selected="true"])::after {
+  content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 3px;
+  border-radius: 3px; background: var(--neri-accent); box-shadow: 0 0 8px #e87da64d; pointer-events: none;
+}
+/* 已选中行仅画一根竖条，避免内部按钮 aria-current 重复叠加。 */
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-thread-selected="true"] [aria-current="page"] { background: transparent!important; }
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-thread-selected="true"] [aria-current="page"]::after { content: none; pointer-events: none; }
+html[data-codex-prism] :is([data-testid="send-button"],button[aria-label="发送"],button[aria-label="Send"]) {
+  background-color: var(--neri-action)!important; color: #fff9fc!important; border-radius: 10px;
+}
+html[data-codex-prism] :is([data-testid="send-button"],button[aria-label="发送"],button[aria-label="Send"]):hover { background-color: var(--neri-action-hover)!important; }
+/* 输入栏末端共用主操作图标标记，覆盖发送、语音和生成中的停止按钮。 */
+html[data-codex-prism] [data-composer-surface-variant] button:has(> .icon-primary-action) {
+  background:var(--neri-action)!important; color:#FFF9FC!important;
+  border-color:transparent!important; border-radius:50%!important;
+}
+html[data-codex-prism] [data-composer-surface-variant] button:has(> .icon-primary-action):hover {
+  background:var(--neri-action-hover)!important;
+}
+html[data-codex-prism] [data-composer-surface-variant] button:has(> .icon-primary-action) > svg {
+  color:inherit!important;
+}
+/* 右上工具栏原位覆盖，原生SVG仍在；不改按钮大小、提示或点击行为。 */
+html[data-codex-prism] [data-app-shell-titlebar] [data-neri-top-icon] { position:relative; }
+html[data-codex-prism] [data-app-shell-titlebar] [data-neri-top-icon] svg { opacity:0!important; }
+html[data-codex-prism] [data-app-shell-titlebar] [data-neri-top-icon]::before {
+  content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:20px; height:20px; background:var(--neri-top-icon) center/contain no-repeat;
+  opacity:.84; pointer-events:none; transition:opacity .15s ease,filter .15s ease;
+}
+html[data-codex-prism] [data-neri-top-icon="more"] { --neri-top-icon:var(--neri-top-more); }
+html[data-codex-prism] [data-neri-top-icon="share"] { --neri-top-icon:var(--neri-top-share); }
+html[data-codex-prism] [data-neri-top-icon="list"] { --neri-top-icon:var(--neri-top-list); }
+html[data-codex-prism] [data-neri-top-icon="panel"] { --neri-top-icon:var(--neri-top-panel); }
+html[data-codex-prism] [data-app-shell-titlebar] [data-neri-top-icon]:is(:hover,:focus-visible,[aria-pressed="true"],[aria-expanded="true"])::before {
+  opacity:1; filter:brightness(1.1);
+}
+/* 主导航静态 SVG 采用本地资源背景，保留原生节点、读屏标签与按钮事件。
+   第四枚星旋对应当前宿主的“插件”入口（builtin:customize）。 */
+html[data-codex-prism] button[data-sidebar-destination="builtin:home"] { --neri-nav-icon:var(--neri-rail-home); }
+html[data-codex-prism] button[data-sidebar-destination="builtin:space"] { --neri-nav-icon:var(--neri-rail-cards); }
+html[data-codex-prism] button[data-sidebar-destination="builtin:automations"] { --neri-nav-icon:var(--neri-rail-tasks); }
+html[data-codex-prism] button[data-sidebar-destination="builtin:customize"] { --neri-nav-icon:var(--neri-rail-explore); }
+html[data-codex-prism] button:is([data-sidebar-destination="builtin:home"],[data-sidebar-destination="builtin:space"],[data-sidebar-destination="builtin:automations"],[data-sidebar-destination="builtin:customize"]) > span {
+  position:relative;
+}
+html[data-codex-prism] button:is([data-sidebar-destination="builtin:home"],[data-sidebar-destination="builtin:space"],[data-sidebar-destination="builtin:automations"],[data-sidebar-destination="builtin:customize"]) > span > svg { opacity:0!important; }
+html[data-codex-prism] button:is([data-sidebar-destination="builtin:home"],[data-sidebar-destination="builtin:space"],[data-sidebar-destination="builtin:automations"],[data-sidebar-destination="builtin:customize"]) > span::before {
+  content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:22px; height:22px; background:var(--neri-nav-icon) center/contain no-repeat;
+  opacity:.78; pointer-events:none; transition:opacity .15s ease,filter .15s ease;
+}
+html[data-codex-prism] button[data-sidebar-destination]:is(:hover,:focus-visible,[aria-current="page"],[data-selected]) > span::before {
+  opacity:1; filter:brightness(1.08);
+}
+/* 文件夹直接跟随宿主展开状态，无额外事件或状态副本；仅替换图标槽内 SVG。 */
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-project-row] [data-sidebar-project-container-id]:has(svg) { position:relative; }
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-project-row] [data-sidebar-project-container-id] svg { opacity:0!important; }
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-project-row] [data-sidebar-project-container-id]:has(svg)::after {
+  content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:18px; height:18px; background:var(--neri-folder-closed) center/contain no-repeat; pointer-events:none;
+}
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-project-row][aria-expanded="true"] [data-sidebar-project-container-id]:has(svg)::after {
+  background-image:var(--neri-folder-open);
+}
+/* 额度原生节点保留供 React 和提示框使用；自定义内联 SVG 不拦截点击。 */
+[data-neri-quota] { display:none; }
+html[data-codex-prism] [data-neri-quota-slot] { position:relative; }
+html[data-codex-prism] [data-neri-quota-slot] > :not([data-neri-quota]) { opacity:0!important; pointer-events:none!important; }
+html[data-codex-prism] svg[data-neri-quota] { display:block; position:absolute; inset:0; margin:auto; width:28px; height:28px; overflow:visible; pointer-events:none; }
+/* 模式字标使用随插件打包的原始 SVG；只隐藏字标，保留菜单箭头与读屏文字。
+   素材自带透明留白，装饰层向外延展以保证文字和星芒大小合适。 */
+html[data-codex-prism] #app-shell-sidebar [data-neri-mode] [data-neri-wordmark-slot] {
+  position:relative; display:block; width:112px; height:32px; overflow:visible;
+}
+html[data-codex-prism] #app-shell-sidebar [data-neri-mode="chatgpt"] [data-neri-wordmark-slot] { width:140px; }
+html[data-codex-prism] #app-shell-sidebar [data-neri-mode] [data-neri-wordmark-slot] > svg { display:none!important; }
+html[data-codex-prism] #app-shell-sidebar [data-neri-mode] [data-neri-wordmark-slot]::after {
+  content:""; position:absolute; inset:-8px -14px;
+  background:var(--neri-wordmark-codex) center/contain no-repeat; pointer-events:none;
+}
+html[data-codex-prism] #app-shell-sidebar [data-neri-mode="chatgpt"] [data-neri-wordmark-slot]::after {
+  background-image:var(--neri-wordmark-chatgpt);
+}
+/* 新聊天保留原生前导图标槽；PNG 原位替换，不再在文字右侧追加。 */
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat] {
+  box-sizing: border-box; background: rgba(40,32,58,.75)!important;
+  border: 1px solid rgba(232,125,166,.35)!important; border-radius: 10px;
+  color: var(--neri-text)!important;
+  padding-inline: calc(var(--padding-row-cell-x,var(--padding-row-x,8px)) - 1px);
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat]:hover {
+  background: rgba(55,39,69,.82)!important;
+  box-shadow: inset 0 0 12px rgba(232,125,166,.06),0 0 8px rgba(232,125,166,.10);
+}
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat]::after { content:none; pointer-events:none; }
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat] svg,
+html[data-codex-prism] [data-app-action-sidebar-section-heading="Projects"] [data-app-action-sidebar-section-toggle] svg { display:none!important; }
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat] > :first-child > :first-child:has(svg) {
+  display:inline-flex; flex:0 0 18px; width:18px; min-width:18px; height:18px;
+  background:var(--neri-bow) center/contain no-repeat; pointer-events:none;
+}
+html[data-codex-prism] #app-shell-sidebar [data-neri-new-chat] > :first-child > :first-child:has(svg) > span { display:none; }
+/* 项目按钮保持原来的折叠事件，以同尺寸 PNG 取代 SVG；间距沿用导航行变量。 */
+html[data-codex-prism] [data-app-action-sidebar-section-heading="Projects"] [data-app-action-sidebar-section-toggle] {
+  gap:var(--spacing-nav-row-content,8px);
+}
+html[data-codex-prism] [data-app-action-sidebar-section-heading="Projects"] [data-app-action-sidebar-section-toggle]::before {
+  content:""; display:block; flex:0 0 18px; width:18px; height:18px;
+  background:var(--neri-notebook) center/contain no-repeat; pointer-events:none;
+}
+html[data-codex-prism] [data-app-action-sidebar-section-heading="Projects"] [data-app-action-sidebar-section-toggle]::after {
+  content:none; pointer-events:none;
+}
+/* “最近”沿用项目的 18px 前导图标与间距，保留右侧原生折叠箭头。 */
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-section-heading="Recents"] [data-app-action-sidebar-section-toggle] {
+  gap:var(--spacing-nav-row-content,8px);
+}
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-section-heading="Recents"] [data-app-action-sidebar-section-toggle]::before {
+  content:""; display:block; flex:0 0 18px; width:18px; height:18px;
+  background:var(--neri-white-bow) center/contain no-repeat; pointer-events:none;
+}
+html[data-codex-prism] [data-app-action-sidebar-section]::after {
+  content: ""; display: block; height: 7px; margin: 8px 12px;
+  background: var(--neri-divider) center / 100% 7px no-repeat; pointer-events: none; opacity: .3;
+  mix-blend-mode: var(--neri-overlay-blend);
+}
+html[data-codex-prism] #app-shell-sidebar button[aria-label="取消置顶聊天"]::after {
+  content: ""; position: absolute; inset: 2px; background: var(--neri-white-bow) center / contain no-repeat; pointer-events: none;
+}
+html[data-codex-prism] #app-shell-sidebar [data-app-action-sidebar-thread-pinned="true"] [data-thread-title]::before {
+  content: ""; display: inline-block; width: 16px; height: 14px; margin-right: 4px;
+  background: var(--neri-white-bow) center / contain no-repeat; pointer-events: none;
+}
+html[data-codex-prism] [data-codex-composer-root][data-composer-placement="home"]::before {
+  content: ""; display: block; height: 48px; margin-bottom: 14px;
+  background: var(--neri-cat-clean) center / contain no-repeat; pointer-events: none;
+}
+html[data-codex-prism] [data-codex-composer-root][data-composer-placement="home"]::after {
+  content: ""; display: block; height: 12px; margin-top: 12px;
+  background: var(--neri-line) center / 180px auto no-repeat; pointer-events: none;
+}
+html[data-codex-prism] :is(button[aria-label="关闭"],button[aria-label="Close"]):not([data-app-shell-titlebar] button)::after {
+  content: ""; position: absolute; right: 0; top: 0; width: 10px; height: 10px;
+  background: var(--neri-hairpin) center / contain no-repeat; pointer-events: none;
+}
+/* 流式态猫只作微装饰，不替换停止按钮、不改变可访问名称。 */
+html[data-codex-prism][data-neri-streaming] [data-thread-composer-backdrop]::before {
+  content: ""; position: absolute; top: -30px; left: 20px; width: 32px; height: 28px;
+  background: var(--neri-cat) center / contain no-repeat; pointer-events: none; animation: neri-breathe 2.4s ease-in-out infinite;
+}
+@keyframes neri-breathe { 50% { opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { html[data-codex-prism] [data-thread-composer-backdrop]::before { animation: none!important; } }
+
+html[data-codex-prism] :is(button[aria-label="滚动到底部"],button[aria-label="Scroll to bottom"],[data-testid="scroll-to-bottom-button"]) {
+  /* 在原生动态 bottom 计算之上增加间距，不覆盖水平 translate 或悬停位移。 */
+  margin-bottom:10px!important;
+  background: rgba(28,25,46,.85)!important; border: 1px solid rgba(232,125,166,.45)!important;
+  color: #F4EBF5!important; border-radius: 50%!important;
+  backdrop-filter: blur(18px); transition: transform .15s ease, box-shadow .15s ease;
+  box-shadow: 0 3px 12px #100f1c33!important;
+}
+html[data-codex-prism] :is(button[aria-label="滚动到底部"],button[aria-label="Scroll to bottom"]):hover { transform: translateY(-2px); box-shadow: 0 0 12px #e87da633!important; }
+html[data-codex-prism] :is([data-markdown-text-style="assistant-message"],[data-user-message-bubble]) a { color: var(--neri-accent)!important; text-decoration: underline; }
+html[data-codex-prism] pre {
+  background: var(--neri-code)!important; border: 1px solid var(--neri-edge)!important;
+  border-radius: 12px!important; color: var(--neri-text)!important; text-shadow: none;
+}
+html[data-codex-prism] :is(pre > header,div:has(> pre) > header) { background: var(--neri-code-header)!important; }
+html[data-codex-prism] :is(pre button,button[aria-label*="复制"],button[aria-label*="Copy"]):hover { color: var(--neri-accent)!important; box-shadow: 0 0 10px #c94a6133; }
+html[data-codex-prism] :is([role="dialog"],[role="menu"]) { background: rgba(24,22,41,.96)!important; color: var(--neri-text)!important; border-color: var(--neri-edge)!important; }
+html[data-codex-prism] * { scrollbar-width: thin; scrollbar-color: rgba(237,230,240,.22) transparent; }
+html[data-codex-prism] ::-webkit-scrollbar { width: 6px; height: 6px; }
+html[data-codex-prism] ::-webkit-scrollbar-track { background: transparent; }
+html[data-codex-prism] ::-webkit-scrollbar-thumb { background: rgba(237,230,240,.22); border-radius: 6px; }
+html[data-codex-prism] ::-webkit-scrollbar-thumb:hover { background: rgba(232,125,166,.55); }

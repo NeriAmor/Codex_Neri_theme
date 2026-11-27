@@ -1,0 +1,573 @@
+/* ==========================================================================
+   Neri Theme & Wallpaper Floating Panel — Starry Glass UI Stylesheet
+   Palette matched to Neri (音理) dark starry-purple desktop theme
+   ========================================================================== */
+
+:host {
+  --neri-panel-bg: rgba(20, 16, 34, 0.86);
+  --neri-panel-bg-elevated: rgba(34, 27, 56, 0.56);
+  --neri-panel-bg-input: rgba(14, 11, 25, 0.68);
+  --neri-panel-border: rgba(232, 206, 245, 0.16);
+  --neri-panel-border-strong: rgba(246, 178, 218, 0.36);
+
+  --neri-text-primary: #F8F1FA;
+  --neri-text-secondary: rgba(232, 218, 242, 0.74);
+  --neri-text-muted: rgba(206, 190, 224, 0.52);
+
+  --neri-rose: #F38BC2;
+  --neri-rose-deep: #C44E92;
+  --neri-crimson: #D93B66;
+  --neri-lavender: #C7B2E8;
+  --neri-glow: 0 0 14px rgba(243, 139, 194, 0.35);
+
+  --neri-radius-panel: 16px;
+  --neri-radius-card: 12px;
+  --neri-radius-control: 9px;
+}
+
+/* Floating Panel Shell */
+.neri-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 680px;
+  max-width: calc(100vw - 32px);
+  max-height: 82vh;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(214, 108, 174, 0.14), transparent 52%),
+    radial-gradient(ellipse at 90% 100%, rgba(132, 92, 204, 0.14), transparent 50%),
+    var(--neri-panel-bg);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: 1px solid var(--neri-panel-border);
+  border-radius: var(--neri-radius-panel);
+  box-shadow:
+    0 24px 64px rgba(6, 4, 14, 0.72),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 1px 0 rgba(255, 232, 248, 0.14) inset;
+  color: var(--neri-text-primary);
+  font-family: "Noto Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* Subtle starry lace top accent */
+.neri-panel-ornament {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 16px;
+  pointer-events: none;
+  opacity: 0.78;
+}
+
+/* 1. Header Bar */
+.neri-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(232, 206, 245, 0.1);
+  cursor: grab;
+  user-select: none;
+}
+
+.neri-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.neri-header-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(243, 139, 194, 0.4));
+}
+
+.neri-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.neri-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: linear-gradient(180deg, #FFFFFF 15%, #F6CEE8 75%, #C8B4E6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.neri-subtitle {
+  font-size: 12px;
+  color: var(--neri-text-secondary);
+}
+
+.neri-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(243, 139, 194, 0.12);
+  border: 1px solid rgba(243, 139, 194, 0.28);
+  font-size: 11px;
+  color: #FAD4EC;
+  white-space: nowrap;
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.neri-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neri-rose);
+  box-shadow: 0 0 8px var(--neri-rose);
+  flex-shrink: 0;
+}
+
+.neri-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.neri-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: var(--neri-radius-control);
+  border: 1px solid rgba(232, 206, 245, 0.15);
+  background: rgba(44, 35, 70, 0.62);
+  color: var(--neri-text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+
+.neri-btn:hover {
+  background: rgba(66, 50, 102, 0.78);
+  border-color: rgba(246, 178, 218, 0.38);
+}
+
+.neri-btn-primary {
+  background: linear-gradient(135deg, rgba(217, 59, 102, 0.82), rgba(162, 62, 136, 0.85));
+  border-color: rgba(255, 196, 224, 0.36);
+  color: #FFF8FC;
+}
+
+.neri-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(235, 72, 118, 0.92), rgba(186, 74, 156, 0.94));
+  box-shadow: var(--neri-glow);
+}
+
+.neri-btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--neri-text-secondary);
+}
+
+.neri-btn-danger:hover {
+  background: rgba(184, 42, 76, 0.32);
+  border-color: rgba(245, 123, 152, 0.5);
+  color: #FFE4EC;
+}
+
+.neri-btn-icon {
+  width: 30px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+/* Scrollable Body */
+.neri-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.neri-body::-webkit-scrollbar {
+  width: 6px;
+}
+.neri-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.neri-body::-webkit-scrollbar-thumb {
+  background: rgba(215, 186, 235, 0.22);
+  border-radius: 999px;
+}
+.neri-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(243, 139, 194, 0.42);
+}
+
+/* Section Card */
+.neri-card {
+  background: var(--neri-panel-bg-elevated);
+  border: 1px solid rgba(232, 206, 245, 0.11);
+  border-radius: var(--neri-radius-card);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.neri-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.neri-row-between {
+  justify-content: space-between;
+}
+
+/* Custom Glowing Range Sliders */
+.neri-slider-field {
+  flex: 1;
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.neri-field-label {
+  font-size: 12px;
+  color: var(--neri-text-secondary);
+  white-space: nowrap;
+}
+
+.neri-range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--neri-rose) 0%,
+    var(--neri-rose-deep) var(--val, 58%),
+    rgba(218, 198, 238, 0.16) var(--val, 58%),
+    rgba(218, 198, 238, 0.16) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.neri-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFFFFF, #F9B4DB 65%, #D2589C 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 10px rgba(243, 139, 194, 0.65);
+  transition: transform 0.14s ease;
+}
+
+.neri-range::-webkit-slider-thumb:hover {
+  transform: scale(1.16);
+}
+
+.neri-value-chip {
+  min-width: 38px;
+  text-align: center;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(14, 11, 25, 0.56);
+  border: 1px solid rgba(232, 206, 245, 0.12);
+  color: #F7D8EC;
+}
+
+/* Custom Neri Rose-Pink Pill Toggle (replaces raw browser blue checkbox) */
+.neri-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--neri-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neri-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.neri-switch-track {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(215, 194, 236, 0.16);
+  border: 1px solid rgba(232, 206, 245, 0.2);
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.neri-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #DFD2EE;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.neri-switch input:checked + .neri-switch-track {
+  background: linear-gradient(135deg, #F38BC2, #C44E92);
+  border-color: rgba(255, 214, 238, 0.55);
+  box-shadow: 0 0 10px rgba(243, 139, 194, 0.38);
+}
+
+.neri-switch input:checked + .neri-switch-track::after {
+  transform: translateX(14px);
+  background: #FFFFFF;
+}
+
+/* Inputs & Selects */
+.neri-input,
+.neri-select {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: var(--neri-radius-control);
+  border: 1px solid rgba(232, 206, 245, 0.14);
+  background: var(--neri-panel-bg-input);
+  color: var(--neri-text-primary);
+  font-size: 12px;
+  outline: none;
+  color-scheme: dark;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.neri-select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' fill='none' stroke='%23E8CEF5' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
+}
+
+.neri-input:focus,
+.neri-select:focus {
+  border-color: rgba(243, 139, 194, 0.55);
+  box-shadow: 0 0 0 2px rgba(243, 139, 194, 0.16);
+}
+
+.neri-input::placeholder {
+  color: var(--neri-text-muted);
+}
+
+.neri-input-num {
+  width: 56px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Divider inside card */
+.neri-divider {
+  height: 1px;
+  background: rgba(232, 206, 245, 0.09);
+}
+
+/* Collapsible Directory Drawer */
+.neri-dir-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  background: rgba(16, 12, 28, 0.45);
+  border: 1px solid rgba(232, 206, 245, 0.09);
+  font-size: 11px;
+  color: var(--neri-text-secondary);
+}
+
+.neri-dir-toggle {
+  background: none;
+  border: none;
+  color: #F6BCE0;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.neri-dir-toggle:hover {
+  background: rgba(243, 139, 194, 0.14);
+}
+
+.neri-dir-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(14, 10, 24, 0.56);
+  border: 1px dashed rgba(232, 206, 245, 0.18);
+}
+
+.neri-dir-list {
+  font-size: 11px;
+  color: var(--neri-text-muted);
+  line-height: 1.55;
+  word-break: break-all;
+}
+
+/* Wallpaper Gallery Grid */
+.neri-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.neri-wp-card {
+  position: relative;
+  border-radius: 11px;
+  overflow: hidden;
+  background: rgba(24, 19, 40, 0.82);
+  border: 1px solid rgba(232, 206, 245, 0.12);
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.neri-wp-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(246, 178, 218, 0.42);
+  box-shadow: 0 8px 20px rgba(8, 4, 18, 0.48);
+}
+
+.neri-wp-card.is-active {
+  border-color: rgba(246, 152, 208, 0.85);
+  box-shadow:
+    0 0 0 1px rgba(246, 152, 208, 0.45),
+    0 0 18px rgba(216, 78, 146, 0.34);
+}
+
+.neri-wp-thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #171226;
+}
+
+.neri-wp-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.neri-wp-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(14, 10, 26, 0.72);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #EBD8F6;
+}
+
+.neri-wp-active-star {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F586C0, #C43E7D);
+  box-shadow: 0 0 10px rgba(245, 134, 192, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 11px;
+}
+
+.neri-wp-meta {
+  padding: 7px 8px 8px;
+}
+
+.neri-wp-name {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--neri-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.neri-wp-sub {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--neri-text-muted);
+}
+
+/* Footer */
+.neri-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 10px;
+  border-top: 1px solid rgba(232, 206, 245, 0.09);
+  font-size: 11px;
+  color: var(--neri-text-muted);
+}
+
+.neri-kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(232, 206, 245, 0.14);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 10px;
+  color: #EBD9F5;
+}
+
+/* 适配现有可拖拽/缩放的 Shadow DOM 容器，字体跟随宿主设置。 */
+:host{all:initial;position:fixed;right:26px;top:70px;width:min(760px,calc(100vw - 32px));height:min(800px,calc(100vh - 110px));min-width:min(360px,calc(100vw - 24px));min-height:340px;max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);resize:both;overflow:hidden;z-index:2147483001;border-radius:16px;-webkit-app-region:no-drag;box-sizing:border-box}
+:host([hidden]),[hidden]{display:none!important}
+*{box-sizing:border-box}button,input,select{font-family:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--neri-rose);outline-offset:2px}
+.neri-panel{width:100%;height:100%;max-width:none;max-height:none;min-height:0;font-family:var(--font-ui-family,"Segoe UI",sans-serif);container-type:inline-size}
+.neri-header,.neri-footer{flex-shrink:0}.neri-header{touch-action:none}.neri-header-left{flex-wrap:wrap;gap:6px 10px;flex:1}.neri-title{margin:0}.neri-title-group{flex-wrap:wrap}.neri-status-pill{margin:0;max-width:230px;min-height:24px}.neri-status-pill.error{color:#ffb4c8;border-color:#ff9bb766}
+.neri-panel-ornament{background:var(--neri-panel-ornament) center top/auto 16px repeat-x;pointer-events:none}
+.neri-header-icon{display:block;background:var(--neri-settings-icon) center/contain no-repeat;pointer-events:none}
+.neri-body{min-height:0;overscroll-behavior:contain}.neri-range{min-width:60px}.neri-input-num{padding:0 4px}.neri-library-tools{gap:8px}.neri-library-tools #search{flex:1;min-width:120px}.neri-library-tools #kind{max-width:140px}.neri-switch input:focus-visible + .neri-switch-track{outline:2px solid var(--neri-rose);outline-offset:2px}.neri-switch-track,.neri-switch-track::after{pointer-events:none}
+.neri-wp-card{padding:0;text-align:left;min-width:0;color:inherit;font:inherit}.neri-wp-name{display:block}.neri-wp-sub{display:block}.neri-wp-badge,.neri-wp-active-star{pointer-events:none}.placeholder{width:100%;height:100%;display:grid;place-items:center;color:var(--neri-text-muted);font-size:12px}
+#file{display:none}#folders{display:flex;gap:8px}#folder{flex:1;min-width:0}.neri-dir-list{max-height:90px;overflow:auto}.neri-footer{gap:8px;flex-wrap:wrap}.neri-status-pill{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@container (max-width:560px){.neri-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.neri-header{align-items:flex-start;padding:12px}.neri-subtitle{font-size:11px}.neri-body{padding:10px}.neri-card{padding:10px}.neri-status-pill{max-width:150px}.neri-dir-bar{flex-wrap:wrap}.neri-footer{font-size:10px}.neri-header-actions{gap:4px}}

@@ -1,0 +1,50 @@
+/* =========================================================
+ * 音理（Neri）主题 UI 素材接入参考片段
+ * 提示：桌面端插件通常支持相对路径、本地 file:/// 路径或 Base64 Data URI
+ * ========================================================= */
+
+:root {
+  /* 方案 A：使用纯透明 PNG（直接叠放，无需混合模式） */
+  --neri-overlay-frame: url("./overlays/transparent/neri-overlay-transparent.png");
+  --neri-lace-trim: url("./overlays/transparent/neri-lace-transparent.png");
+  --neri-divider: url("./overlays/transparent/neri-divider-transparent.png");
+  --neri-composer-trim: url("./overlays/transparent/neri-composer-trim-transparent.png");
+
+  /* 方案 B：如需使用 screen 滤色版，请将上面路径换为 overlays/screen/*-screen.png 并开启 mix-blend-mode: screen */
+
+  /* 透明底音理意象图标 */
+  --neri-icon-bow: url("./icons/icon-bow.png");
+  --neri-icon-cat: url("./icons/icon-cat.png");
+  --neri-icon-cat-clean: url("./icons/icon-cat-clean.png");
+  --neri-icon-hairpin: url("./icons/icon-hairpin.png");
+  --neri-icon-white-bow: url("./icons/icon-white-bow.png");
+  --neri-icon-notebook: url("./icons/icon-notebook.png");
+  --neri-icon-line: url("./icons/icon-line.png");
+}
+
+/* 全屏星夜蕾丝与星光氛围叠层 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--neri-overlay-frame) center / cover no-repeat;
+  opacity: 0.78;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 若改用 screen 黑底版，只需取消下面注释：
+body::after {
+  mix-blend-mode: screen;
+}
+*/
+
+/* 输入框外框星光柔光叠层示例 */
+form:has(#prompt-textarea)::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  background: var(--neri-composer-trim) center / 100% 100% no-repeat;
+  opacity: 0.85;
+  pointer-events: none;
+}

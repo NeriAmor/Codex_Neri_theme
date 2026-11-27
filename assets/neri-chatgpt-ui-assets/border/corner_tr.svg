@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <!-- Neri Window Border: Top-Right Corner (星轨蕾丝 + 白色蝴蝶结) -->
+  <defs>
+    <linearGradient id="trLine" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F7ECFA" stop-opacity="0.72"/>
+      <stop offset="50%" stop-color="#D8BBE8" stop-opacity="0.46"/>
+      <stop offset="100%" stop-color="#9A7AC0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="trPink" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8B8DD" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#B06AC4" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="trGlow" cx="88%" cy="12%" r="65%">
+      <stop offset="0%" stop-color="#E8A2D4" stop-opacity="0.16"/>
+      <stop offset="55%" stop-color="#9B6AC8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#181526" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="320" height="320" fill="url(#trGlow)"/>
+
+  <!-- Outer double starry-railway frame lines -->
+  <!-- 边线与波纹改由同一全窗口SVG绘制，避免角纹接缝错位。 -->
+  <!-- Sweeping constellation orbit arcs -->
+  <path d="M 302,164 C 278,118 234,62 156,18"
+        fill="none" stroke="url(#trPink)" stroke-width="1.15" stroke-linecap="round"/>
+  <path d="M 298,126 C 272,88 232,48 194,22"
+        fill="none" stroke="url(#trLine)" stroke-width="0.9" stroke-dasharray="2 4"/>
+
+  <!-- Translucent Neri white satin ribbon bow tucked in top-right corner -->
+  <g transform="translate(268, 44) rotate(28)" opacity="0.72">
+    <path d="M -2,3 L -15,20 L -7,17 L -4,23 L 0,4 Z" fill="#F6ECF9" fill-opacity="0.22" stroke="#F6E8FB" stroke-width="1"/>
+    <path d="M 2,3 L 17,19 L 9,16 L 6,22 L 0,4 Z" fill="#F6ECF9" fill-opacity="0.22" stroke="#F6E8FB" stroke-width="1"/>
+    <path d="M -2,0 C -14,-12 -23,-5 -20,3 C -17,9 -9,8 -2,2 Z" fill="#F6ECF9" fill-opacity="0.28" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M 2,0 C 14,-12 23,-5 20,3 C 17,9 9,8 2,2 Z" fill="#F6ECF9" fill-opacity="0.28" stroke="#FFFFFF" stroke-width="1"/>
+    <rect x="-3.5" y="-3.5" width="7" height="7" rx="2.2" fill="#FFFFFF" fill-opacity="0.55" stroke="#FFFFFF" stroke-width="0.9"/>
+  </g>
+
+  <!-- Four-point starlight sparkles & stardust -->
+  <g fill="#FFF5FC">
+    <path d="M 224,36 L 225.5,41 L 230.5,42.5 L 225.5,44 L 224,49 L 222.5,44 L 217.5,42.5 L 222.5,41 Z" opacity="0.78"/>
+    <path d="M 284,114 L 285,118 L 289,119 L 285,120 L 284,124 L 283,120 L 279,119 L 283,118 Z" opacity="0.68"/>
+    <circle cx="246" cy="82" r="1.5" opacity="0.6"/>
+    <circle cx="168" cy="28" r="1.2" opacity="0.5"/>
+    <circle cx="292" cy="152" r="1.2" opacity="0.5"/>
+    <circle cx="122" cy="22" r="1" opacity="0.4"/>
+    <circle cx="298" cy="198" r="1" opacity="0.4"/>
+  </g>
+</svg>

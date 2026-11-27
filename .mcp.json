@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "neri_theme": {
+      "command": "node",
+      "args": [
+        "codex/mcp.mjs"
+      ],
+      "cwd": ".",
+      "enabled": true,
+      "env": {
+        "CODEX_PRISM_DEBUG_PORT": "9340"
+      },
+      "startup_timeout_sec": 20,
+      "tool_timeout_sec": 30
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Neri Plugin Icon (Primary): Starry Wallpaper Frame + Crimson Bow -->
+  <defs>
+    <linearGradient id="npFrameStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="52%" stop-color="#F6CCE8"/>
+      <stop offset="100%" stop-color="#B996DC"/>
+    </linearGradient>
+    <linearGradient id="npFrameBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4B3463" stop-opacity="0.92"/>
+      <stop offset="55%" stop-color="#2D1E42" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#1D152E" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="npWave" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6A6D6" stop-opacity="0.88"/>
+      <stop offset="55%" stop-color="#C85399" stop-opacity="0.82"/>
+      <stop offset="100%" stop-color="#6F2B6B" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="npBow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8AA8"/>
+      <stop offset="55%" stop-color="#D93B66"/>
+      <stop offset="100%" stop-color="#961F42"/>
+    </linearGradient>
+    <radialGradient id="npStarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#FFD8EE"/>
+      <stop offset="100%" stop-color="#DF6CB0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="npGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="0.95" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="npFrameClip">
+      <rect x="4.8" y="7.2" width="21.4" height="18.2" rx="4.2"/>
+    </clipPath>
+  </defs>
+
+  <!-- Starry wallpaper frame body -->
+  <rect x="4.8" y="7.2" width="21.4" height="18.2" rx="4.2"
+        fill="url(#npFrameBg)" stroke="url(#npFrameStroke)" stroke-width="1.55" filter="url(#npGlow)"/>
+
+  <!-- Inner starry horizon & dreamlight waves -->
+  <g clip-path="url(#npFrameClip)">
+    <!-- Soft nebula glow top-left -->
+    <circle cx="11.2" cy="13.2" r="5.5" fill="url(#npStarGlow)" opacity="0.45"/>
+
+    <!-- Back twilight hill -->
+    <path d="M 4,25.8 L 4,20.2 C 7.6,17.8 11.4,18.2 14.8,20.4 C 18.4,22.6 22.2,20.6 27,18.2 L 27,25.8 Z"
+          fill="#68387A" opacity="0.65"/>
+
+    <!-- Front rose-violet starry hill -->
+    <path d="M 4,25.8 L 4,22.4 C 8.4,20.6 12.2,17.2 16.4,19.4 C 20.2,21.4 23.6,22.8 27,21.2 L 27,25.8 Z"
+          fill="url(#npWave)"/>
+
+    <!-- Tiny starry dust inside frame -->
+    <circle cx="17.6" cy="11.6" r="0.85" fill="#FBE8F6" opacity="0.9"/>
+    <circle cx="21.5" cy="15.2" r="0.65" fill="#E6CEF6" opacity="0.75"/>
+    <circle cx="8.2" cy="17.6" r="0.6" fill="#FFD8EE" opacity="0.8"/>
+
+    <!-- Main 4-point Neri starlight crystal -->
+    <path d="M 11.4,10.1 L 12.2,12.5 L 14.6,13.3 L 12.2,14.1 L 11.4,16.5 L 10.6,14.1 L 8.2,13.3 L 10.6,12.5 Z"
+          fill="#FFF8FD" filter="url(#npGlow)"/>
+  </g>
+
+  <!-- Neri signature crimson satin bow perched on top-right corner -->
+  <g transform="translate(23.8, 7.6) rotate(24)" filter="url(#npGlow)">
+    <!-- Ribbon tails -->
+    <path d="M -0.6,1.2 L -3.0,5.2 L -1.2,4.4 L 0.2,1.6 Z" fill="#B52B52"/>
+    <path d="M 0.6,1.2 L 3.0,5.2 L 1.2,4.4 L -0.2,1.6 Z" fill="#C9345E"/>
+    <!-- Left bow loop -->
+    <path d="M -0.4,0 C -2.8,-2.8 -5.8,-1.8 -5.4,0.6 C -5.0,2.8 -2.2,2.4 -0.4,0.6 Z"
+          fill="url(#npBow)" stroke="#FFD5E4" stroke-opacity="0.55" stroke-width="0.45"/>
+    <!-- Right bow loop -->
+    <path d="M 0.4,0 C 2.8,-2.8 5.8,-1.8 5.4,0.6 C 5.0,2.8 2.2,2.4 0.4,0.6 Z"
+          fill="url(#npBow)" stroke="#FFD5E4" stroke-opacity="0.55" stroke-width="0.45"/>
+    <!-- Center knot -->
+    <circle cx="0" cy="0.3" r="1.25" fill="#FF9EB8" stroke="#8C1A3C" stroke-width="0.4"/>
+  </g>
+
+  <!-- Subtle outer sparkle bottom-left -->
+  <path d="M 4.4,24.8 L 4.9,26.1 L 6.2,26.6 L 4.9,27.1 L 4.4,28.4 L 3.9,27.1 L 2.6,26.6 L 3.9,26.1 Z"
+        fill="#FFF5FC" opacity="0.9"/>
+</svg>
