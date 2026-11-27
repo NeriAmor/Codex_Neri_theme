@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {serviceRequest} from '../codex/service-client.mjs';
 import {chromium} from 'playwright';
 import {writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -8,6 +9,7 @@ const session=await page.context().newCDPSession(page);
 const errors=[];const onError=e=>errors.push(e.message);page.on('pageerror',onError);
 let checks=0;const check=(condition,message)=>{assert.ok(condition,message);checks++;};
 const report={};
+const savedConfig=(await serviceRequest('state')).effectiveConfig;
 try {
   const loaded=await page.evaluate(async()=>{
     const css=getComputedStyle(document.documentElement);
@@ -27,33 +29,38 @@ try {
     const titlebar=visible('[data-app-shell-titlebar]');
     const lace=getComputedStyle(titlebar,'::after');
     const trim=getComputedStyle(visible('[data-composer-surface-variant]'),'::after');
-    const surfaces=['[data-codex-composer]','[data-markdown-text-style="assistant-message"]','#app-shell-sidebar [data-thread-title]'];
+    const surfaces=['[data-composer-surface-variant] [contenteditable="true"]','[data-markdown-text-style="assistant-message"]','#app-shell-sidebar [data-thread-title]'];
     const fonts=()=>surfaces.map(s=>getComputedStyle(visible(s)).fontFamily);
     const actualFonts=fonts();
     const theme=[...document.querySelectorAll('style')].find(e=>e.textContent.includes('--neri-chrome'));
     theme.disabled=true;const nativeFonts=fonts();theme.disabled=false;
-    return {composer:read('[data-composer-surface-variant]'),assistant:read('[data-markdown-text-style="assistant-message"]:not(:empty)'),user:read('[data-user-message-bubble]'),overlay:overlay.pointerEvents,overlayOpacity:overlay.opacity,oldOverlay:oldOverlay.content,gradient:gradient.pointerEvents,gradientImage:gradient.backgroundImage,laceOpacity:lace.opacity,laceHeight:lace.height,trimOpacity:trim.opacity,actualFonts,nativeFonts,borders:['[data-composer-surface-variant]','[data-user-message-bubble]','[data-markdown-text-style="assistant-message"]:not(:empty)','#app-shell-sidebar'].map(s=>{const c=getComputedStyle(visible(s));return {color:c.borderTopColor,width:c.borderTopWidth};})};
+    return {mode:document.documentElement.dataset.neriAppearance,composer:read('[data-composer-surface-variant]'),assistant:read('[data-markdown-text-style="assistant-message"]:not(:empty)'),user:read('[data-user-message-bubble]'),overlay:overlay.pointerEvents,overlayOpacity:overlay.opacity,oldOverlay:oldOverlay.content,gradient:gradient.pointerEvents,gradientImage:gradient.backgroundImage,laceOpacity:lace.opacity,laceHeight:lace.height,trimOpacity:trim.opacity,actualFonts,nativeFonts,borders:['[data-composer-surface-variant]','[data-user-message-bubble]','[data-markdown-text-style="assistant-message"]:not(:empty)','#app-shell-sidebar'].map(s=>{const c=getComputedStyle(visible(s));return {color:c.borderTopColor,width:c.borderTopWidth};})};
   });
-  check(paint.composer.background==='rgba(22, 21, 38, 0.88)','composer needs opaque violet background');
-  check(paint.assistant.background==='rgba(27, 25, 46, 0.76)','assistant needs Neri glass');
-  check(paint.user.background==='rgba(56, 39, 53, 0.8)','user needs warm violet glass');
-  check(paint.composer.blur.includes('18px'),'glass blur active');
+  const light=paint.mode==='light',opacity=savedConfig.glassOpacity;
+  const colors=light?{composer:'255, 250, 254',assistant:'252, 249, 255',user:'248, 232, 242'}:{composer:'22, 21, 38',assistant:'27, 25, 46',user:'56, 39, 53'};
+  for(const [name,rgb]of Object.entries(colors))check(paint[name].background===`rgba(${rgb}, ${opacity})`,name+' follows saved opacity');
+  check(paint.composer.blur.includes(savedConfig.glassBlur+'px'),'glass follows saved blur, including zero');
   check(paint.composer.radius==='24px','composer has 24px capsule corners');
-  check(paint.assistant.color==='rgb(237, 230, 240)','body uses specified warm white');
+  check(paint.assistant.color===(light?'rgb(32, 22, 41)':'rgb(237, 230, 240)'),'body uses specified warm white');
   check(JSON.stringify(paint.actualFonts)===JSON.stringify(paint.nativeFonts),'theme preserves app-configured fonts in composer, body and sidebar');
-  check(Number(paint.overlayOpacity)>=.65&&Number(paint.overlayOpacity)<=.9,'SVG edge opacity follows asset guidance');
+  check(light?Number(paint.overlayOpacity)===.4:(Number(paint.overlayOpacity)>=.65&&Number(paint.overlayOpacity)<=.9),'SVG edge opacity follows asset guidance');
   check(paint.oldOverlay==='none','old full-screen frame removed');
   check(Number(paint.laceOpacity)<.35&&parseFloat(paint.laceHeight)<=6,'header lace stays small and faint');
   check(Number(paint.trimOpacity)===.4,'composer retains subtle trim');
-  check(paint.gradientImage.includes('0.42')&&paint.gradientImage.match(/0\.15/g)?.length===2,'mask darkens the center symmetrically');
+  check(light?(paint.gradientImage.includes('0.48')&&paint.gradientImage.match(/0\.16/g)?.length===2):(paint.gradientImage.includes('0.42')&&paint.gradientImage.match(/0\.15/g)?.length===2),'mask darkens the center symmetrically');
   for(const edge of paint.borders){const alpha=Number(edge.color.match(/,\s*([\d.]+)\)$/)?.[1]);check(parseFloat(edge.width)===0||(alpha>=.08&&alpha<=.14),'container edge must stay subtle or absent: '+edge.color);}
   check(paint.overlay==='none'&&paint.gradient==='none','full-screen decorations never intercept input');
   report.paint=paint;
-  // 最坏情况按纯白壁纸合成透明底，验证主文字和输入栏辅助文字。
+  // 按实际叠放顺序合成遮罩、主背景与气泡；不再用已移除的固定透明度冒充当前结果。
   const luminance=rgb=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
-  const contrast=(fg,bg,a)=>{const f=luminance(fg),b=luminance(bg.map(v=>v*a+255*(1-a)));return (Math.max(f,b)+.05)/(Math.min(f,b)+.05);};
-  report.contrast={assistant:contrast([237,230,240],[27,25,46],.76),user:contrast([237,230,240],[56,39,53],.8),composerMuted:contrast([169,159,184],[22,21,38],.88)};
-  for(const [key,value]of Object.entries(report.contrast))check(value>=4.5,key+' meets AA even over white wallpaper');
+  const blend=(front,back,a)=>front.map((v,i)=>v*a+back[i]*(1-a));
+  const wall=light?[0,0,0]:[255,255,255];
+  const veil=blend(light?[249,244,252]:[16,15,28],wall,light?.48:.42);
+  const main=blend(light?[247,249,252]:[18,20,24],veil,opacity);
+  const contrast=(fg,bg)=>{const f=luminance(fg),b=luminance(blend(bg,main,opacity));return (Math.max(f,b)+.05)/(Math.min(f,b)+.05);};
+  const text=light?[32,22,41]:[237,230,240];
+  report.contrast={assistant:contrast(text,colors.assistant.split(',').map(Number)),user:contrast(text,colors.user.split(',').map(Number)),composer:contrast(text,colors.composer.split(',').map(Number))};
+  for(const [key,value]of Object.entries(report.contrast))check(value>=4.5,key+' meets AA at current saved settings with real glass layers');
   const layout=await page.evaluate(()=>{
     const visible=s=>[...document.querySelectorAll(s)].find(e=>e.getBoundingClientRect().width>0);
     const column=visible('[data-thread-user-message-navigation-content]'),composer=visible('[data-thread-composer-backdrop]');
@@ -62,7 +69,7 @@ try {
   check(layout.maxWidth==='860px','chat width capped at 860 CSS pixels');
   check(Math.abs(parseFloat(layout.right)-parseFloat(layout.left))<2,'wide chat is centered');
   report.desktop=layout;
-  const composer=page.locator('[data-codex-composer]').filter({visible:true}).last();
+  const composer=page.locator('[data-composer-surface-variant] [contenteditable="true"]').filter({visible:true}).last();
   await composer.click();check(await composer.evaluate(e=>e===document.activeElement),'decoration permits input focus');
   check(await page.locator('[data-composer-surface-variant]').filter({visible:true}).last().evaluate(e=>getComputedStyle(e).boxShadow.includes('232, 125, 166')),'focus shows pink halo');
   await composer.evaluate(e=>e.blur());

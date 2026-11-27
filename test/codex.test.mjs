@@ -27,10 +27,12 @@ test('real upload, persistence, native playback path, authentication, and restor
     assert.equal(upload.status,200);const uploaded=await upload.json();assert.ok(uploaded.item?.id);
     assert.equal((await call('apply',{id:uploaded.item.id})).status,200);
     const payload=await nativePayload(app.engine);assert.equal(payload.kind,'image');assert.match(payload.url,/^app:\/\/fs\/@fs\//);assert.equal(payload.enabled,true);
-    assert.equal((await call('config',{glassOpacity:.53})).status,200);
+    assert.equal((await call('config',{glassOpacity:.2,glassBlur:0})).status,200);
+    assert.equal(app.engine.getConfig().glassOpacity,.2);assert.equal(app.engine.getConfig().glassBlur,0);
+    assert.equal((await call('config',{glassOpacity:.25,glassBlur:40})).status,200);
     await call('restore',{});assert.equal(app.engine.getConfig().skinEnabled,false);
     await app.close();app=await createCodexServer({dataDir:dir,connect:false});
-    assert.equal(app.engine.getConfig().glassOpacity,.53);assert.equal(app.engine.getConfig().skinEnabled,false);
+    assert.equal(app.engine.getConfig().glassOpacity,.25);assert.equal(app.engine.getConfig().glassBlur,40);assert.equal(app.engine.getConfig().skinEnabled,false);
     assert.ok((await app.engine.listLibrary()).items.some(i=>i.id===uploaded.item.id));
   } finally {await app?.close();await rm(dir,{recursive:true,force:true});}
 });

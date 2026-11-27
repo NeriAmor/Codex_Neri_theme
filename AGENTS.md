@@ -34,3 +34,5 @@
 | 浅色模式须同步正文/侧栏/输入框/菜单及 Shadow DOM 设置，保留字体与壁纸；显式模式优先系统并可切回 | npm run test:appearance + node test/live-appearance.mjs（实机模式切换后恢复） |
 
 | 边缘装饰必须在完整宿主的侧栏/顶栏上可见，不能只隐藏内容检查几何；深浅模式均不拦截输入 | node test/live-frame-visibility.mjs + test/frame-visibility.py；旧层级须被拒绝 |
+
+| 透明度20%–98%和模糊0–40px须在主聊天背景/侧栏/两种气泡/输入框均生效，深浅模式都不可设隐藏下限；侧栏外壳不得重复叠加玻璃 | node test/live-glass-controls.mjs + python test/glass-pixels.py（真实键盘操作、低中高档、重开及还原、固定壁纸帧像素变化）；后台范围与面板一致 |

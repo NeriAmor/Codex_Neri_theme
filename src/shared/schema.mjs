@@ -1179,7 +1179,7 @@ export function sanitizeConfig(input = {}, base = DEFAULT_CONFIG) {
     wallTintMix: num(merged.wallTintMix, DEFAULT_CONFIG.wallTintMix, 0, 0.18, 3),
 
     glassSurfaces: bool(merged.glassSurfaces, DEFAULT_CONFIG.glassSurfaces),
-    glassOpacity: num(merged.glassOpacity, DEFAULT_CONFIG.glassOpacity, 0.3, 0.98, 3),
+    glassOpacity: num(merged.glassOpacity, DEFAULT_CONFIG.glassOpacity, 0.2, 0.98, 3),
     glassBlur: num(merged.glassBlur, DEFAULT_CONFIG.glassBlur, 0, 48, 0),
     sidebarOpacity: nullableNum(merged.sidebarOpacity, 0.2, 0.98, 3),
     sidebarBlur: nullableNum(merged.sidebarBlur, 0, 48, 0),

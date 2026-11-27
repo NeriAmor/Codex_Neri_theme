@@ -1,9 +1,9 @@
 /* 音理主题：真实 Codex DOM 的语义标记。仅启用壁纸时生效，恢复按钮仍可撤销。 */
 :root {
   --neri-chrome: rgba(20, 19, 34, var(--neri-opacity,.72));
-  --neri-ai: rgba(27, 25, 46, max(.60,var(--neri-opacity,.76)));
-  --neri-user: rgba(56, 39, 53, max(.65,var(--neri-opacity,.80)));
-  --neri-input: rgba(22, 21, 38, max(.80,var(--neri-opacity,.88)));
+  --neri-ai: rgba(27, 25, 46, var(--neri-opacity,.76));
+  --neri-user: rgba(56, 39, 53, var(--neri-opacity,.80));
+  --neri-input: rgba(22, 21, 38, var(--neri-opacity,.88));
   --neri-code: rgba(24, 22, 41, .90);
   --neri-code-header: #24213B;
   --neri-accent: #E87DA6;
@@ -311,15 +311,15 @@ html[data-codex-prism] ::-webkit-scrollbar-thumb { background: rgba(237,230,240,
 html[data-codex-prism] ::-webkit-scrollbar-thumb:hover { background: rgba(232,125,166,.55); }
 
 /* 浅色模式：柔白淡紫玻璃。由 inject.js 解析宿主/系统模式，不改用户字体。
-   容器仍响应统一透明度；正文最低 .86，避免深色壁纸透出后损害对比度。 */
+   所有主玻璃容器直接响应统一透明度，不设置吞掉低档调节的最低值。 */
 html[data-neri-appearance="light"] {
-  --neri-chrome: rgba(248, 244, 252, max(.82,var(--neri-opacity,.86)));
-  --neri-ai: rgba(252, 249, 255, max(.86,var(--neri-opacity,.9)));
-  --neri-user: rgba(248, 232, 242, max(.88,var(--neri-opacity,.9)));
-  --neri-input: rgba(255, 250, 254, max(.94,var(--neri-opacity,.96)));
+  --neri-chrome: rgba(248, 244, 252, var(--neri-opacity,.86));
+  --neri-ai: rgba(252, 249, 255, var(--neri-opacity,.9));
+  --neri-user: rgba(248, 232, 242, var(--neri-opacity,.9));
+  --neri-input: rgba(255, 250, 254, var(--neri-opacity,.96));
   --neri-code: rgba(246, 241, 250, .96);
   --neri-code-header: #EDE5F2;
-  --neri-text: #30263D;
+  --neri-text: #201629;
   --neri-muted: #66566F;
   --neri-accent: #A33168;
   --neri-star: #886329;

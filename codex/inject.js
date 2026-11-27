@@ -28,7 +28,7 @@ html[data-codex-prism] body {background:transparent!important;isolation:isolate}
 #codex-prism-stage>* {width:100%;height:100%;object-fit:var(--cp-fit,cover);opacity:var(--cp-opacity,1)}
 html[data-codex-prism] :where(#root,#app,[data-app-shell-frame],[data-app-shell-active-page],[data-app-shell-page-surface],[data-app-shell-main-surface],[data-app-shell-surface-backing]) {background:transparent!important}
 html[data-codex-prism] [data-app-shell-frame] {--color-token-main-surface-primary:transparent;--color-token-main-surface-secondary:transparent;--color-background:transparent;--color-bg-primary:transparent}
-html[data-codex-prism] [data-app-shell-main-surface] {background:var(--cp-glass)!important}
+html[data-codex-prism] [data-app-shell-main-surface] {background:var(--cp-glass)!important;backdrop-filter:blur(var(--cp-blur,0px));-webkit-backdrop-filter:blur(var(--cp-blur,0px))}
 html[data-codex-prism] [data-app-shell-main-surface] [data-sticky][data-expand-search],
 html[data-codex-prism] [data-app-shell-main-surface] [data-sticky][data-expand-search]::before,
 html[data-codex-prism] [data-app-shell-main-surface] [data-sticky][data-expand-search]::after {background:transparent!important;box-shadow:none!important}
@@ -37,8 +37,10 @@ html[data-codex-prism] [data-app-shell-main-surface] [class*="--app-shell-conten
 html[data-codex-prism] [data-app-shell-main-surface] .pointer-events-none.absolute:has([data-thread-scroll-footer])::before,
 html[data-codex-prism] [data-app-shell-main-surface] .pointer-events-none.absolute:has([data-thread-scroll-footer])::after {background:none!important;box-shadow:none!important}
 html[data-codex-prism] :is([data-app-shell-sidebar],[data-testid="sidebar"],aside) {background:var(--cp-glass)!important;backdrop-filter:blur(var(--cp-blur))}
+/* 侧栏只绘制一层玻璃；外层 aside 不再叠加同样的背景和模糊。 */
+html[data-codex-prism] aside:has(#app-shell-sidebar) {background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 html[data-codex-prism] :is(pre,[role="dialog"],[role="menu"],[data-radix-popper-content-wrapper]) {background:var(--cp-card,#202124f5)!important}
-html[data-codex-prism] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]:not(:empty),[data-composer-surface-variant]) {backdrop-filter:blur(max(18px,var(--cp-blur))) saturate(115%)!important;-webkit-backdrop-filter:blur(max(18px,var(--cp-blur))) saturate(115%)!important;color:var(--cp-message-text)!important;box-shadow:inset 0 0 0 1px var(--cp-message-edge),inset 0 1px 0 #ffffff0a,0 6px 20px #00000014!important}
+html[data-codex-prism] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]:not(:empty),[data-composer-surface-variant]) {backdrop-filter:blur(var(--cp-blur,0px)) saturate(115%)!important;-webkit-backdrop-filter:blur(var(--cp-blur,0px)) saturate(115%)!important;color:var(--cp-message-text)!important;box-shadow:inset 0 0 0 1px var(--cp-message-edge),inset 0 1px 0 #ffffff0a,0 6px 20px #00000014!important}
 html[data-codex-prism] [data-user-message-bubble] {background:var(--cp-user-glass)!important}
 html[data-codex-prism] [data-markdown-text-style="assistant-message"]:not(:empty) {background:var(--cp-reply-glass)!important;border-radius:16px;padding:14px 18px;margin-block:4px;min-width:0}
 html[data-codex-prism] [data-composer-surface-variant] {background:var(--cp-input-glass)!important}
