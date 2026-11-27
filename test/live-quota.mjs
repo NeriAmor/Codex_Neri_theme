@@ -15,8 +15,9 @@ try {
     const wait=()=>new Promise(r=>setTimeout(r,80));
     const read=()=>{const svg=button.querySelector('[data-neri-quota]');return {
       five:Number(svg.style.getPropertyValue('--quota-5h')),week:Number(svg.style.getPropertyValue('--quota-week')),
-      zeroOpacity:svg.querySelector('[data-quota-part="arc-5h-fill"]').style.opacity,
-      fiveOffset:getComputedStyle(svg.querySelector('[data-quota-part="arc-5h-fill"]')).strokeDashoffset,
+      state:svg.dataset.quotaState,
+      zeroOpacity:svg.querySelector('[data-quota-part="arc-5h-fill"]')?.style.opacity||null,
+      fiveOffset:svg.querySelector('[data-quota-part="arc-5h-fill"]')?getComputedStyle(svg.querySelector('[data-quota-part="arc-5h-fill"]')).strokeDashoffset:null,
       focus:svg.dataset.focus||'',pointer:getComputedStyle(svg).pointerEvents,
       nativeRetained:native.isConnected,nativeHidden:getComputedStyle(native).opacity==='0',
       size:getComputedStyle(svg).width,inline:svg.namespaceURI==='http://www.w3.org/2000/svg',
@@ -41,7 +42,7 @@ try {
   })()`,{awaitPromise:true,timeoutMs:8000});
   assert.equal(report.original.inline,true);assert.equal(report.original.nativeRetained,true);assert.equal(report.original.nativeHidden,true);
   assert.equal(report.original.pointer,'none');assert.equal(report.original.size,'28px');
-  assert.equal(report.zero.five,0);assert.equal(report.zero.week,100);assert.equal(report.zero.zeroOpacity,'0');
+  assert.equal(report.zero.five,0);assert.equal(report.zero.week,100);assert.equal(report.zero.state,'exhausted');
   assert.equal(report.pathFallback.five,75);assert.equal(report.pathFallback.week,40);
   assert.equal(report.focus,'week');assert.equal(report.uniqueIds,true);assert.ok(report.instances>=2);
   assert.equal(report.restored.five,report.original.five);assert.equal(report.restored.week,report.original.week);

@@ -28,3 +28,5 @@
 | 自定义面板须保留目录/开关/轮换/下一张/恢复/快捷键与窄屏布局，原生蓝色checkbox不得露出 | node test/live-panel-ui.mjs（21项）+ node test/live-floating.mjs |
 
 | 安装不能新增主题快捷方式；已有入口必须使用原生 Codex 用户目录，并追溯旧 Prism 创建记录清理重复入口 | powershell.exe -NoProfile -ExecutionPolicy Bypass -File test/shortcuts.ps1 |
+
+| 额度归零、原生警示图标或关联 Tooltip 用尽提示须切换专用图标；恢复无跳位，所有 ID 与引用唯一且菜单保持原生 | node test/quota-exhausted.mjs + node test/live-quota.mjs + node test/live-quota-exhausted.mjs |

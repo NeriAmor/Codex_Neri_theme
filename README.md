@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.1
+# Neri Desktop Theme 1.1.2
 
 Windows ChatGPT / Codex 桌面完整外观插件，不需要原 Wallpaper Prism 插件或单独的文字特效脚本。
 
@@ -33,3 +33,9 @@ python test/frame-pixels.py
 统一使用原生 Codex 用户目录，避免旧版执行别名产生第二套实例；移除外部启动脚本和主题专用快捷方式。
 
 入口回归检查：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File test/shortcuts.ps1`。
+
+## 1.1.2
+
+额度按钮在任一剩余额度归零、Tooltip 提示用尽或原生图标切换为虚线警示圆时，自动显示音理额度用尽图标；恢复后切回双环。原生节点、Tooltip 和菜单交互保留，两种图标尺寸一致。
+
+检查：`node test/quota-exhausted.mjs`、`node test/live-quota.mjs`、`node test/live-quota-exhausted.mjs`。
