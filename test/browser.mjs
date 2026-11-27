@@ -12,7 +12,7 @@ const dataDir=await mkdtemp(join(tmpdir(),'prism-browser-'));
 const shots=new URL('../artifacts/',import.meta.url);await mkdir(shots,{recursive:true});
 const app=await createCodexServer({dataDir,connect:false});
 const browser=await chromium.launch({channel:'msedge',headless:true});
-const page=await browser.newPage({viewport:{width:1280,height:900}});
+const page=await browser.newPage({viewport:{width:1280,height:900},colorScheme:'dark'});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
 let checks=0;
 async function check(condition){assert.ok(condition);checks++;}
@@ -29,7 +29,7 @@ try {
   await page.getByRole('button',{name:'恢复原界面'}).click();await page.getByRole('button',{name:'启用壁纸',exact:true}).waitFor();await check(!app.engine.getConfig().skinEnabled);
   await page.getByRole('button',{name:'启用壁纸',exact:true}).click();await page.getByRole('button',{name:'关闭壁纸',exact:true}).waitFor();await check(app.engine.getConfig().skinEnabled);
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:fileURLToPath(new URL('03-studio-mobile.png',shots)),fullPage:true});
-  const fixture=await browser.newPage({viewport:{width:1280,height:850}});fixture.on('pageerror',e=>errors.push(e.message));
+  const fixture=await browser.newPage({viewport:{width:1280,height:850},colorScheme:'dark'});fixture.on('pageerror',e=>errors.push(e.message));
   await fixture.setContent(`<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src app: blob: data: https:; media-src app: blob: data: https:; style-src 'unsafe-inline'"><style>body{margin:0;font:16px system-ui;color:#eee;background:#111}#root{height:100vh;display:flex}aside{width:230px;padding:24px;background:#202124}main{flex:1;padding:48px}article{max-width:650px;margin:100px auto}pre{padding:20px;border-radius:8px}h1{font-size:30px}</style><div id="root" data-app-shell-frame><nav data-app-navigation-rail><div data-appearance="plain"><button data-slot="popover-trigger">探索</button></div></nav><aside data-app-shell-sidebar>Codex<br><br>项目<br><br>Wallpaper Prism</aside><main data-app-shell-page-surface><article><h1>壁纸背景适配预览</h1><p>此页面用于验证背景层、玻璃透明度和恢复操作。</p><pre>代码与弹窗保持可读</pre><input aria-label="test-input" value="输入框仍可点击"></article></main></div>`);
   const inject=rendererScript;
   await fixture.evaluate(panelScript);

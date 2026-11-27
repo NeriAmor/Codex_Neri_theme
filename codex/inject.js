@@ -3,6 +3,24 @@
   let stage, style, button, frame, current = '', slideTimer, signature = '', enabled = false, escapeCount = 0, escapeAt = 0, mediaError = '';
   const queue = [];
   let suppressed = false, escapeDownSeen = false;
+  // 宿主显式选择优先于系统；模式变化立即同步，无需重启。
+  const systemAppearance = matchMedia('(prefers-color-scheme: light)');
+  let lastPayload;
+  function appearance() {
+    const root = document.documentElement;
+    if (root.dataset.theme === 'light' || root.dataset.theme === 'dark') return root.dataset.theme;
+    if (root.classList.contains('light')) return 'light';
+    if (root.classList.contains('dark')) return 'dark';
+    return systemAppearance.matches ? 'light' : 'dark';
+  }
+  function syncAppearance() {
+    document.documentElement.dataset.neriAppearance = appearance();
+    if (lastPayload) window.__codexPrism?.apply(lastPayload);
+  }
+  const appearanceObserver = new MutationObserver(syncAppearance);
+  appearanceObserver.observe(document.documentElement, {attributes:true, attributeFilter:['class','data-theme']});
+  systemAppearance.addEventListener('change', syncAppearance);
+  syncAppearance();
   const css = `
 html[data-codex-prism] {background:#101216!important}
 html[data-codex-prism] body {background:transparent!important;isolation:isolate}
@@ -81,6 +99,8 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
     paused: false,
     apply(p) {
       if (!document.body) return;
+      lastPayload = p;
+      document.documentElement.dataset.neriAppearance = appearance();
       mount();
       // 只定位聊天页右上角工具栏，保留原生按钮、Tooltip 和点击事件。
       const topIcons={
@@ -108,7 +128,7 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
       document.documentElement.toggleAttribute('data-neri-streaming', Boolean(document.querySelector('[data-composer-surface-variant] button:is([aria-label="停止"],[aria-label="Stop"])')));
       button.setAttribute('aria-pressed',String(Boolean(window.__codexPrismPanel?.isOpen)));
       button.setAttribute('aria-expanded',String(Boolean(window.__codexPrismPanel?.isOpen)));
-      const nextSignature = JSON.stringify(p)+document.documentElement.className+document.documentElement.dataset.theme;
+      const nextSignature = JSON.stringify(p)+appearance();
       if (nextSignature === signature) return;
       signature = nextSignature;
       enabled = p.enabled;
@@ -120,7 +140,7 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
       const c = p.config || {};
       stage.style.setProperty('--cp-fit',c.fit === 'center' ? 'none' : c.fit || 'cover');
       stage.style.setProperty('--cp-opacity',c.mediaOpacity ?? 1);
-      const light = document.documentElement.classList.contains('light') || document.documentElement.dataset.theme === 'light';
+      const light = appearance() === 'light';
       style.textContent = css + `html[data-codex-prism]{--cp-card:${light?'#f5f5f5f5':'#202124f5'};--cp-glass:rgba(${light?'247,249,252':'18,20,24'},${Math.max(.2,Math.min(.98,c.glassOpacity??.76))});--neri-opacity:${Math.max(.2,Math.min(.98,c.glassOpacity??.58))};--cp-blur:${Math.max(0,Math.min(40,c.glassBlur??16))}px;--cp-user-glass:${light?'rgba(239,244,250,.76)':'rgba(51,60,73,.68)'};--cp-reply-glass:${light?'rgba(250,251,253,.68)':'rgba(22,27,35,.58)'};--cp-input-glass:${light?'rgba(247,249,252,.76)':'rgba(33,39,49,.68)'};--cp-message-text:${light?'#17202c':'#f3f5f8'};--cp-message-edge:${light?'#ffffffb3':'#ffffff29'};--cp-focus-edge:${light?'#55678080':'#ffffff52'}}`;
       if(p.neriAssetBase) {
         const base=p.neriAssetBase.replace(/\/$/,'')+'/';
@@ -145,6 +165,6 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
       if(video) { video.loop=!(c.rotationEnabled && c.rotationTrigger==='videoEnd'); video.playbackRate=c.playbackRate||1; video.muted=c.audioEnabled!==true; video.volume=Math.max(0,Math.min(1,c.volume??.5)); if(c.paused)video.pause();else visibility(); }
     },
     drain() { const actions=queue.splice(0); if(mediaError)actions.push('error:'+mediaError); return actions; },
-    destroy() { window.__neriFrame?.destroy(); window.__codexTypingEffects?.dispose(); window.__codexPrismQuota?.destroy(); providerLabelObserver.disconnect(); document.querySelectorAll('[data-neri-top-icon]').forEach(e=>e.removeAttribute('data-neri-top-icon')); document.querySelectorAll('[data-codex-prism-provider-label]').forEach(label => label.removeAttribute('data-codex-prism-provider-label')); clear(); window.__codexPrismPanel?.destroy(); stage?.remove(); frame?.remove(); style?.remove(); button?.remove(); window.removeEventListener('keydown',key,true); window.removeEventListener('keyup',panelKeyUp,true); document.removeEventListener('visibilitychange',visibility); delete window.__codexPrism; },
+    destroy() { appearanceObserver.disconnect(); systemAppearance.removeEventListener('change',syncAppearance); delete document.documentElement.dataset.neriAppearance; window.__neriFrame?.destroy(); window.__codexTypingEffects?.dispose(); window.__codexPrismQuota?.destroy(); providerLabelObserver.disconnect(); document.querySelectorAll('[data-neri-top-icon]').forEach(e=>e.removeAttribute('data-neri-top-icon')); document.querySelectorAll('[data-codex-prism-provider-label]').forEach(label => label.removeAttribute('data-codex-prism-provider-label')); clear(); window.__codexPrismPanel?.destroy(); stage?.remove(); frame?.remove(); style?.remove(); button?.remove(); window.removeEventListener('keydown',key,true); window.removeEventListener('keyup',panelKeyUp,true); document.removeEventListener('visibilitychange',visibility); delete window.__codexPrism; },
   };
 })();

@@ -53,14 +53,20 @@ html[data-codex-prism] [data-app-shell-frame] {
   --color-text-default: var(--neri-text); --color-text-primary: var(--neri-text);
   --color-text-secondary: var(--neri-muted); --color-text-tertiary: var(--neri-muted);
 }
-/* 字体族、字号、字重由应用设置负责，主题不覆盖用户字体。 */
-html[data-codex-prism] :is(#app-shell-sidebar,[data-app-shell-titlebar],[data-app-shell-application-menu-bar]) {
+/* 菜单标记也会出现在整个 app-shell-frame 上；只给独立菜单容器上色，避免二次遮住壁纸。
+   字体族、字号、字重由应用设置负责，主题不覆盖用户字体。 */
+html[data-codex-prism] :is(#app-shell-sidebar,[data-app-shell-titlebar],[data-app-shell-application-menu-bar]:not([data-app-shell-frame])) {
   background: var(--neri-chrome)!important;
   backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%);
   -webkit-backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%);
   color: var(--neri-text)!important; border-color: var(--neri-edge)!important;
 }
 html[data-codex-prism] :is([data-sidebar-navigation-root],[data-slate-sidebar-content],[data-app-navigation-rail]) { background: transparent!important; }
+/* Windows 的菜单栏是 frame 的直接子容器，毛玻璃只覆盖顶部这一行。 */
+html[data-codex-prism] [data-app-shell-frame] > div:has(> [role="menubar"]) {
+  background:var(--neri-chrome)!important;
+  backdrop-filter:blur(var(--cp-blur,18px)) saturate(135%);
+}
 html[data-codex-prism] [data-app-shell-titlebar]::after {
   content: ""; position: absolute; inset: auto 0 -2px; height: 6px;
   background: var(--neri-lace) center / 100% 6px no-repeat;
@@ -302,3 +308,62 @@ html[data-codex-prism] ::-webkit-scrollbar { width: 6px; height: 6px; }
 html[data-codex-prism] ::-webkit-scrollbar-track { background: transparent; }
 html[data-codex-prism] ::-webkit-scrollbar-thumb { background: rgba(237,230,240,.22); border-radius: 6px; }
 html[data-codex-prism] ::-webkit-scrollbar-thumb:hover { background: rgba(232,125,166,.55); }
+
+/* 浅色模式：柔白淡紫玻璃。由 inject.js 解析宿主/系统模式，不改用户字体。
+   容器仍响应统一透明度；正文最低 .86，避免深色壁纸透出后损害对比度。 */
+html[data-neri-appearance="light"] {
+  --neri-chrome: rgba(248, 244, 252, max(.82,var(--neri-opacity,.86)));
+  --neri-ai: rgba(252, 249, 255, max(.86,var(--neri-opacity,.9)));
+  --neri-user: rgba(248, 232, 242, max(.88,var(--neri-opacity,.9)));
+  --neri-input: rgba(255, 250, 254, max(.94,var(--neri-opacity,.96)));
+  --neri-code: rgba(246, 241, 250, .96);
+  --neri-code-header: #EDE5F2;
+  --neri-text: #30263D;
+  --neri-muted: #66566F;
+  --neri-accent: #A33168;
+  --neri-star: #886329;
+  --neri-edge: rgba(88, 57, 106, .12);
+}
+html[data-codex-prism][data-neri-appearance="light"] {
+  background:#F3EDF7!important;
+  --cp-card:rgba(252,248,255,.98)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] #codex-prism-stage { background:#F3EDF7; }
+html[data-codex-prism][data-neri-appearance="light"] #codex-prism-stage::after {
+  /* 两侧通透、中间柔白，保留相同的壁纸与全屏布局。 */
+  background:linear-gradient(90deg,rgba(249,244,252,.16),rgba(249,244,252,.48) 50%,rgba(249,244,252,.16));
+}
+html[data-codex-prism][data-neri-appearance="light"] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]) { text-shadow:none; }
+html[data-codex-prism][data-neri-appearance="light"] :is([data-user-message-bubble],[data-markdown-text-style="assistant-message"]:not(:empty),[data-composer-surface-variant]) {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 5px 18px rgba(66,39,82,.07)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] [data-user-message-bubble] { border-color:rgba(163,49,104,.12)!important; }
+html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant][data-composer-surface-variant] { border-color:var(--neri-edge)!important; }
+html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant]::before {
+  border-color:rgba(133,80,146,.12)!important; box-shadow:0 0 8px rgba(163,49,104,.04)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant]:focus-within {
+  box-shadow:0 0 0 1px rgba(163,49,104,.28),0 0 12px rgba(163,49,104,.10)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-neri-new-chat] {
+  background:rgba(241,229,248,.88)!important; border-color:rgba(163,49,104,.20)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-neri-new-chat]:hover { background:rgba(234,216,242,.94)!important; }
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar :is([aria-current="page"],[data-app-action-sidebar-thread-selected="true"]) {
+  background:linear-gradient(90deg,rgba(163,49,104,.15),rgba(123,75,148,.05))!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-app-action-sidebar-thread-selected="true"] [aria-current="page"] { background:transparent!important; }
+html[data-codex-prism][data-neri-appearance="light"] :is(button[aria-label="滚动到底部"],button[aria-label="Scroll to bottom"],[data-testid="scroll-to-bottom-button"]) {
+  background:rgba(250,243,253,.94)!important; border-color:rgba(163,49,104,.28)!important;
+  color:var(--neri-accent)!important; box-shadow:0 3px 12px rgba(66,39,82,.10)!important;
+}
+html[data-codex-prism][data-neri-appearance="light"] :is([role="dialog"],[role="menu"]) { background:rgba(252,248,255,.98)!important; }
+html[data-codex-prism][data-neri-appearance="light"] * { scrollbar-color:rgba(88,57,106,.28) transparent; }
+html[data-codex-prism][data-neri-appearance="light"] ::-webkit-scrollbar-thumb { background:rgba(88,57,106,.28); }
+html[data-codex-prism][data-neri-appearance="light"] ::-webkit-scrollbar-thumb:hover { background:rgba(163,49,104,.5); }
+/* 银白装饰在浅底上压深成柔紫，保留原素材、尺寸与命中区域。 */
+html[data-codex-prism][data-neri-appearance="light"] #codex-prism-frame { opacity:.40; filter:brightness(.65) saturate(.75); }
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-neri-mode] [data-neri-wordmark-slot]::after { filter:brightness(.48) saturate(.8); }
+html[data-codex-prism][data-neri-appearance="light"] :is([data-app-shell-titlebar] [data-neri-top-icon]::before,button[data-sidebar-destination] > span::before) { filter:brightness(.60) saturate(.85); }
+html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-app-action-sidebar-section-heading="Recents"] [data-app-action-sidebar-section-toggle]::before { filter:drop-shadow(0 1px 1px rgba(88,57,106,.55)); }
+html[data-codex-prism][data-neri-appearance="light"] #codex-prism-button { color:var(--neri-text); border-color:var(--neri-edge); }

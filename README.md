@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.2
+# Neri Desktop Theme 1.1.3
 
 Windows ChatGPT / Codex 桌面外观插件。
 
@@ -39,3 +39,9 @@ python test/frame-pixels.py
 额度按钮在任一剩余额度归零、Tooltip 提示用尽或原生图标切换为虚线警示圆时，自动显示音理额度用尽图标；恢复后切回双环。原生节点、Tooltip 和菜单交互保留，两种图标尺寸一致。
 
 检查：`node test/quota-exhausted.mjs`、`node test/live-quota.mjs`、`node test/live-quota-exhausted.mjs`。
+
+## 1.1.3
+
+新增随应用切换的浅色主题：柔白淡紫毛玻璃、深紫正文、茜红操作按钮，覆盖侧栏、气泡、输入框、代码块、菜单及悬浮设置；保留壁纸、字体设置与深色样式。选择跟随系统时自动同步。
+
+检查：`npm run test:appearance`、`node test/live-appearance.mjs`。

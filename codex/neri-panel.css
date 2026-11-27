@@ -571,3 +571,40 @@
 .neri-wp-card{padding:0;text-align:left;min-width:0;color:inherit;font:inherit}.neri-wp-name{display:block}.neri-wp-sub{display:block}.neri-wp-badge,.neri-wp-active-star{pointer-events:none}.placeholder{width:100%;height:100%;display:grid;place-items:center;color:var(--neri-text-muted);font-size:12px}
 #file{display:none}#folders{display:flex;gap:8px}#folder{flex:1;min-width:0}.neri-dir-list{max-height:90px;overflow:auto}.neri-footer{gap:8px;flex-wrap:wrap}.neri-status-pill{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @container (max-width:560px){.neri-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.neri-header{align-items:flex-start;padding:12px}.neri-subtitle{font-size:11px}.neri-body{padding:10px}.neri-card{padding:10px}.neri-status-pill{max-width:150px}.neri-dir-bar{flex-wrap:wrap}.neri-footer{font-size:10px}.neri-header-actions{gap:4px}}
+
+/* Shadow DOM 通过宿主属性跟随模式；关闭主题后设置面板也保持可读。 */
+:host-context(html[data-neri-appearance="light"]) {
+  color-scheme:light;
+  --neri-panel-bg:rgba(252,248,255,.96);
+  --neri-panel-bg-elevated:rgba(241,232,248,.72);
+  --neri-panel-bg-input:rgba(255,252,255,.94);
+  --neri-panel-border:rgba(88,57,106,.13);
+  --neri-panel-border-strong:rgba(163,49,104,.32);
+  --neri-text-primary:#30263D;
+  --neri-text-secondary:#66566F;
+  --neri-text-muted:#71617A;
+  --neri-rose:#A33168;
+  --neri-rose-deep:#8D285C;
+  --neri-lavender:#78558E;
+  --neri-glow:0 0 12px rgba(163,49,104,.16);
+}
+:host-context(html[data-neri-appearance="light"]) .neri-panel { box-shadow:0 18px 54px rgba(66,39,82,.18),inset 0 1px 0 #fff; }
+:host-context(html[data-neri-appearance="light"]) .neri-title { background:none; color:var(--neri-rose); }
+:host-context(html[data-neri-appearance="light"]) :is(.neri-header,.neri-footer,.neri-card,.neri-btn,.neri-input,.neri-select,.neri-wp-card,.neri-dir-bar,.neri-dir-drawer,.neri-kbd,.neri-value-chip) { border-color:var(--neri-panel-border); }
+:host-context(html[data-neri-appearance="light"]) :is(.neri-btn,.neri-dir-bar,.neri-dir-drawer,.neri-value-chip,.neri-kbd) { background:rgba(233,221,242,.7); color:var(--neri-text-primary); }
+:host-context(html[data-neri-appearance="light"]) .neri-btn:hover { background:rgba(224,201,233,.8); border-color:var(--neri-panel-border-strong); }
+:host-context(html[data-neri-appearance="light"]) .neri-btn-primary { background:#C94A61; color:#FFF9FC; }
+:host-context(html[data-neri-appearance="light"]) .neri-btn-primary:hover { background:#DF5E75; }
+:host-context(html[data-neri-appearance="light"]) .neri-btn-danger:hover { background:#F7DDE5; color:#912A4A; }
+:host-context(html[data-neri-appearance="light"]) .neri-status-pill { color:#8D285C; background:#F5E4EF; border-color:rgba(163,49,104,.22); }
+:host-context(html[data-neri-appearance="light"]) .neri-status-pill.error { color:#A12545; border-color:#B74A67; }
+:host-context(html[data-neri-appearance="light"]) .neri-dir-toggle { color:var(--neri-rose); }
+:host-context(html[data-neri-appearance="light"]) :is(.neri-input,.neri-select) { color-scheme:light; }
+:host-context(html[data-neri-appearance="light"]) .neri-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' fill='none' stroke='%2366566F' stroke-width='1.4'/%3E%3C/svg%3E"); }
+:host-context(html[data-neri-appearance="light"]) .neri-wp-card { background:#F7EFFA; }
+:host-context(html[data-neri-appearance="light"]) .neri-wp-card.is-active { border-color:var(--neri-rose); box-shadow:0 0 0 1px rgba(163,49,104,.24); }
+:host-context(html[data-neri-appearance="light"]) .neri-divider { background:var(--neri-panel-border); }
+:host-context(html[data-neri-appearance="light"]) .neri-range { background:linear-gradient(90deg,var(--neri-rose) 0%,var(--neri-rose-deep) var(--val,58%),#DCD0E5 var(--val,58%),#DCD0E5 100%); }
+:host-context(html[data-neri-appearance="light"]) .neri-switch-track { background:#DCD0E5; border-color:rgba(88,57,106,.18); }
+:host-context(html[data-neri-appearance="light"]) .neri-switch-track::after { background:#FFF; }
+:host-context(html[data-neri-appearance="light"]) .neri-switch input:checked + .neri-switch-track { background:linear-gradient(135deg,#C94A61,#A33168); }

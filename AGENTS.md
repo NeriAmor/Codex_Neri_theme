@@ -30,3 +30,5 @@
 | 安装不能新增主题快捷方式；已有入口必须使用原生 Codex 用户目录，并追溯旧 Prism 创建记录清理重复入口 | powershell.exe -NoProfile -ExecutionPolicy Bypass -File test/shortcuts.ps1 |
 
 | 额度归零、原生警示图标或关联 Tooltip 用尽提示须切换专用图标；恢复无跳位，所有 ID 与引用唯一且菜单保持原生 | node test/quota-exhausted.mjs + node test/live-quota.mjs + node test/live-quota-exhausted.mjs |
+
+| 浅色模式须同步正文/侧栏/输入框/菜单及 Shadow DOM 设置，保留字体与壁纸；显式模式优先系统并可切回 | npm run test:appearance + node test/live-appearance.mjs（实机模式切换后恢复） |
