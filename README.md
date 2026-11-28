@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.6
+# Neri Desktop Theme 1.1.7
 
 Windows ChatGPT / Codex 桌面外观插件。
 
@@ -63,3 +63,7 @@ python test/frame-pixels.py
 输入框边框替换为六片自适应音理星夜蕾丝SVG：白羽发卡、绯红蝴蝶结、星芒、小黑猫及上下饰条。四角保持48px，不随输入框宽度或多行高度拉伸；聚焦显示粉紫光晕，浅色模式自动调整装饰深浅。保留透明度/模糊调节，并移除旧PNG外圈。
 
 检查：`node test/composer-border.mjs`、`node test/live-composer.mjs`。
+
+## 1.1.7
+
+升级 v2 音理输入框边框：96×72四角与-22px定位、380×28星冠、360×22底蕾丝，新增内层虚线缝边；白羽发卡、绯红蝴蝶结和黑猫图案更清晰。保留透明度/模糊调节与单行/多行适配，并增加底部留白。

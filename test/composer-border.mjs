@@ -10,7 +10,7 @@ let checks=0;const check=(v,m)=>{assert.ok(v,m);checks++;};
 const payload={enabled:true,kind:'image',neriAssetBase:'https://neri-assets.test/',url:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1" fill="%23322a45"/></svg>',config:{glassOpacity:.62,glassBlur:18}};
 const geometry=()=>page.locator('#capsule').evaluate(e=>{
   const c=getComputedStyle(e),r=e.getBoundingClientRect();
-  return {rect:r.toJSON(),background:c.backgroundColor,blur:c.backdropFilter,radius:c.borderRadius,overflow:c.overflow,shadow:c.boxShadow,old:[getComputedStyle(e,'::before').content,getComputedStyle(e,'::after').content],pieces:[...e.querySelectorAll('.neri-composer-decor img')].map(i=>{const s=getComputedStyle(i),b=i.getBoundingClientRect();return {name:i.className,decoded:i.complete&&i.naturalWidth>0,width:s.width,height:s.height,fit:s.objectFit,events:s.pointerEvents,offset:[b.left-r.left,b.top-r.top,r.right-b.right,r.bottom-b.bottom]};})};
+  return {rect:r.toJSON(),background:c.backgroundColor,blur:c.backdropFilter,radius:c.borderRadius,overflow:c.overflow,shadow:c.boxShadow,old:[getComputedStyle(e,'::before').content,getComputedStyle(e,'::after').content],stitch:{border:getComputedStyle(e,'::before').borderTopStyle,inset:getComputedStyle(e,'::before').top,events:getComputedStyle(e,'::before').pointerEvents},pieces:[...e.querySelectorAll('.neri-composer-decor img')].map(i=>{const s=getComputedStyle(i),b=i.getBoundingClientRect();return {name:i.className,decoded:i.complete&&i.naturalWidth>0,width:s.width,height:s.height,fit:s.objectFit,events:s.pointerEvents,offset:[b.left-r.left,b.top-r.top,r.right-b.right,r.bottom-b.bottom]};})};
 });
 try{
   await page.route('https://neri-assets.test/**',route=>route.fulfill({path:fileURLToPath(new URL('../assets/neri-chatgpt-ui-assets/'+new URL(route.request().url()).pathname.slice(1),import.meta.url)),contentType:'image/svg+xml'}));
@@ -20,7 +20,9 @@ try{
   const normal=await geometry();
   check(normal.pieces.length===6,'all six original SVGs decode');
   check(normal.radius==='24px'&&normal.overflow==='visible','outer capsule retains required geometry');
-  check(normal.old.every(x=>x==='none'),'old PNG and CSS outline removed');
+  check(normal.old[0]===String.fromCharCode(34,34)&&normal.old[1]==='none','v2 stitch replaces old outer outline and PNG');
+  check(normal.stitch.border==='dashed'&&normal.stitch.inset==='4px','inner stitch has required inset');
+  check(normal.stitch.events==='none','inner stitch permits clicks');
   for(const item of normal.pieces){check(item.decoded,'real SVG decoded');check(item.events==='none'&&item.fit==='contain','decoration cannot intercept and preserves ratio');}
   await page.evaluate(p=>window.__codexPrism.apply({...p,config:{glassOpacity:.25,glassBlur:0}}),payload);
   await page.waitForFunction(()=>getComputedStyle(document.querySelector('#capsule')).backgroundColor==='rgba(22, 21, 38, 0.25)');
@@ -38,14 +40,14 @@ try{
       await page.locator('#capsule').evaluate((e,h)=>e.style.minHeight=h+'px',height);
       const g=await geometry();check(g.rect.width<=width-48,'capsule fits viewport');
       for(const item of g.pieces.filter(i=>i.name.includes('corner'))){
-        check(item.width==='48px'&&item.height==='48px','corner does not stretch in wide/narrow or multiline');
+        check(item.width==='96px'&&item.height==='72px','corner does not stretch in wide/narrow or multiline');
         const right=/neri-c-[tb]r/.test(item.name),bottom=/neri-c-b[lr]/.test(item.name);
-        check(Math.abs(item.offset[right?2:0]+8)<=1.1&&Math.abs(item.offset[bottom?3:1]+8)<=1.1,'corner remains attached to rim');
+        check(Math.abs(item.offset[right?2:0]+22)<=2&&Math.abs(item.offset[bottom?3:1]+22)<=2,'corner remains attached to rim');
       }
     }
   }
   await page.locator('textarea').fill('第一行\n第二行\n第三行');await page.locator('textarea').focus();await page.waitForTimeout(260);
-  check((await geometry()).shadow.includes('216, 94, 166'),'real focus shows supplied pink glow');
+  check((await geometry()).shadow.includes('224, 92, 168'),'real focus shows supplied pink glow');
   check(await page.locator('#plus').evaluate(e=>document.elementFromPoint(e.getBoundingClientRect().x+16,e.getBoundingClientRect().y+16)===e),'left button stays clickable');
   await page.locator('#send').click({trial:true});checks++;
   await page.screenshot({path:fileURLToPath(new URL('../artifacts/52-composer-narrow-multiline.png',import.meta.url))});

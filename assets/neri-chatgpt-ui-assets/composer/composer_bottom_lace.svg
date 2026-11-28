@@ -1,20 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 14" width="220" height="14">
-  <!-- Neri Composer Bottom Center Starlight Accent -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 22" width="360" height="22">
+  <!-- Neri Composer Bottom Center Lace Frill (360x22): Scalloped Hem + Starlight Diamond -->
   <defs>
-    <linearGradient id="cblLine" gradientUnits="userSpaceOnUse" x1="0" y1="7" x2="220" y2="7">
+    <linearGradient id="bcLine" gradientUnits="userSpaceOnUse" x1="12" y1="8" x2="348" y2="8">
       <stop offset="0%" stop-color="#D7C3EC" stop-opacity="0"/>
-      <stop offset="25%" stop-color="#E6C2E8" stop-opacity="0.45"/>
-      <stop offset="50%" stop-color="#FFF2FB" stop-opacity="0.82"/>
-      <stop offset="75%" stop-color="#E6C2E8" stop-opacity="0.45"/>
+      <stop offset="20%" stop-color="#EBC4E6" stop-opacity="0.58"/>
+      <stop offset="50%" stop-color="#FFF5FC" stop-opacity="0.92"/>
+      <stop offset="80%" stop-color="#EBC4E6" stop-opacity="0.58"/>
       <stop offset="100%" stop-color="#D7C3EC" stop-opacity="0"/>
     </linearGradient>
+    <linearGradient id="bcLace" gradientUnits="userSpaceOnUse" x1="36" y1="8" x2="324" y2="8">
+      <stop offset="0%" stop-color="#E8A8D2" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#F4B8DE" stop-opacity="0.52"/>
+      <stop offset="50%" stop-color="#FFE4F4" stop-opacity="0.84"/>
+      <stop offset="75%" stop-color="#F4B8DE" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#E8A8D2" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bcGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="1.0" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
-  <line x1="10" y1="7" x2="96" y2="7" stroke="url(#cblLine)" stroke-width="0.95"/>
-  <line x1="124" y1="7" x2="210" y2="7" stroke="url(#cblLine)" stroke-width="0.95"/>
+  <!-- Horizontal starlight rail aligned on y=8 -->
+  <line x1="12" y1="8" x2="162" y2="8" stroke="url(#bcLine)" stroke-width="1.1"/>
+  <line x1="198" y1="8" x2="348" y2="8" stroke="url(#bcLine)" stroke-width="1.1"/>
 
-  <!-- Center diamond & twin starlight dots -->
-  <path d="M 110,3.2 L 113.8,7 L 110,10.8 L 106.2,7 Z" fill="#FCE6F5" opacity="0.85"/>
-  <circle cx="99.5" cy="7" r="1.1" fill="#E8B8DD" opacity="0.72"/>
-  <circle cx="120.5" cy="7" r="1.1" fill="#E8B8DD" opacity="0.72"/>
+  <!-- Delicate scalloped lace frill hanging softly below y=8 -->
+  <path d="M 46,8 Q 58,14.8 70,8 Q 82,14.8 94,8 Q 106,14.8 118,8 Q 130,14.8 142,8 Q 152,13.6 162,8"
+        fill="none" stroke="url(#bcLace)" stroke-width="1.05"/>
+  <path d="M 198,8 Q 208,13.6 218,8 Q 230,14.8 242,8 Q 254,14.8 266,8 Q 278,14.8 290,8 Q 302,14.8 314,8"
+        fill="none" stroke="url(#bcLace)" stroke-width="1.05"/>
+
+  <!-- Center rose-pearl 4-point star -->
+  <path d="M 180,2.2 L 182.1,5.9 L 185.8,8 L 182.1,10.1 L 180,13.8 L 177.9,10.1 L 174.2,8 L 177.9,5.9 Z"
+        fill="#FFF5FC" stroke="#F49BC8" stroke-width="0.55" filter="url(#bcGlow)"/>
+  <circle cx="168" cy="8" r="1.2" fill="#F6C0E2" opacity="0.82"/>
+  <circle cx="192" cy="8" r="1.2" fill="#F6C0E2" opacity="0.82"/>
 </svg>

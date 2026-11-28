@@ -1,15 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <!-- Neri Composer Corner BR: Filigree Arc + Tiny Starlight Black Cat Silhouette -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 72" width="96" height="72">
+  <!-- Neri Composer Corner BR (96x72): Adorable Perched Black Cat + Curled Tail + Glowing Eyes -->
   <defs>
-    <linearGradient id="cbrArc" gradientUnits="userSpaceOnUse" x1="4" y1="44" x2="44" y2="4">
+    <linearGradient id="brArc" gradientUnits="userSpaceOnUse" x1="4" y1="50" x2="74" y2="16">
       <stop offset="0%" stop-color="#D7C3EC" stop-opacity="0"/>
-      <stop offset="28%" stop-color="#E8CBEB" stop-opacity="0.65"/>
-      <stop offset="55%" stop-color="#FFF5FC" stop-opacity="0.92"/>
-      <stop offset="80%" stop-color="#E8CBEB" stop-opacity="0.65"/>
+      <stop offset="22%" stop-color="#F1C8E8" stop-opacity="0.62"/>
+      <stop offset="52%" stop-color="#FFF7FD" stop-opacity="0.96"/>
+      <stop offset="80%" stop-color="#F1C8E8" stop-opacity="0.74"/>
       <stop offset="100%" stop-color="#D7C3EC" stop-opacity="0"/>
     </linearGradient>
-    <filter id="cbrGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="1.0" result="b"/>
+    <radialGradient id="brCatBody" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#3A284C"/>
+      <stop offset="60%" stop-color="#20152D"/>
+      <stop offset="100%" stop-color="#130B1D"/>
+    </radialGradient>
+    <filter id="brGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.35" result="b"/>
       <feMerge>
         <feMergeNode in="b"/>
         <feMergeNode in="SourceGraphic"/>
@@ -17,24 +22,51 @@
     </filter>
   </defs>
 
-  <!-- Outer corner arc hugging r=22px composer rim -->
-  <path d="M 4,40 L 18,40 A 22,22 0 0,0 40,18 L 40,6"
-        fill="none" stroke="url(#cbrArc)" stroke-width="1.35" stroke-linecap="round" filter="url(#cbrGlow)"/>
+  <!-- Outer rim arc aligned to box edge (x=74, y=50, r=24) -->
+  <path d="M 4,50 L 50,50 A 24,24 0 0,0 74,26 L 74,16"
+        fill="none" stroke="url(#brArc)" stroke-width="1.6" stroke-linecap="round" filter="url(#brGlow)"/>
 
-  <!-- Inner delicate lace hairline -->
-  <path d="M 10,36.5 L 18,36.5 A 18.5,18.5 0 0,0 36.5,18 L 36.5,13"
-        fill="none" stroke="#F4CCE8" stroke-opacity="0.3" stroke-width="0.8" stroke-dasharray="2.2 2.4"/>
+  <!-- Scalloped cape-lace under-frill along bottom-right -->
+  <path d="M 8,50 Q 15,55 22,50 Q 29,55.5 36,50 Q 43,55.5 50,50"
+        fill="none" stroke="#F4C6E6" stroke-opacity="0.54" stroke-width="1.05"/>
 
-  <!-- Mini black cat head silhouette peeking softly at bottom-right curve -->
-  <g transform="translate(33.4, 34.0) rotate(-18)" filter="url(#cbrGlow)">
-    <path d="M -5.2,2.4 C -5.8,-0.6 -5.0,-3.2 -4.0,-5.4 L -1.6,-3.2 C -0.6,-3.5 0.6,-3.5 1.6,-3.2 L 4.0,-5.4 C 5.0,-3.2 5.8,-0.6 5.2,2.4 C 4.4,4.8 -4.4,4.8 -5.2,2.4 Z"
-          fill="#20162E" stroke="#F4CBE8" stroke-opacity="0.8" stroke-width="0.75" stroke-linejoin="round"/>
-    <!-- Glowing rose-lavender cat eyes -->
-    <circle cx="-1.9" cy="0.2" r="0.85" fill="#FFD4EE"/>
-    <circle cx="1.9" cy="0.2" r="0.85" fill="#FFD4EE"/>
+  <!-- Inner starry dashed stitch -->
+  <path d="M 18,46 L 50,46 A 20,20 0 0,0 70,26 L 70,20"
+        fill="none" stroke="#F8D8EE" stroke-opacity="0.32" stroke-width="0.9" stroke-dasharray="2.4 2.6"/>
+
+  <!-- Adorable Sitting Black Cat Silhouette gazing at starlight -->
+  <g transform="translate(71.5, 45.5)" filter="url(#brGlow)">
+    <!-- Graceful curled tail sweeping upward-right -->
+    <path d="M 6.5,8.5 C 14.5,8.0 18.8,1.5 16.2,-4.5 C 14.8,-7.6 11.4,-7.4 11.2,-4.6"
+          fill="none" stroke="#221630" stroke-width="3.0" stroke-linecap="round"/>
+    <path d="M 6.5,8.5 C 14.5,8.0 18.8,1.5 16.2,-4.5 C 14.8,-7.6 11.4,-7.4 11.2,-4.6"
+          fill="none" stroke="#F4CBE8" stroke-opacity="0.72" stroke-width="0.85" stroke-linecap="round"/>
+
+    <!-- Sitting cat body -->
+    <path d="M -7.5,9.5 C -9.2,4.5 -7.8,-1.5 -4.2,-4.2 C -1.5,-5.5 2.5,-5.5 5.0,-3.8 C 8.4,-1.0 9.0,4.8 7.2,9.5 C 3.5,11.2 -3.5,11.2 -7.5,9.5 Z"
+          fill="url(#brCatBody)" stroke="#F6D0EA" stroke-opacity="0.78" stroke-width="0.85"/>
+
+    <!-- Tiny crimson neck ribbon on the black cat! -->
+    <path d="M -4.2,-1.4 Q 0.4,0.8 4.8,-1.4" fill="none" stroke="#E0446E" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="0.3" cy="-0.2" r="1.25" fill="#FF8CAE"/>
+
+    <!-- Cat head with pointed ears -->
+    <path d="M -7.2,-6.8 C -8.2,-10.2 -7.0,-13.6 -5.5,-16.8 L -2.2,-13.6 C -0.6,-14.0 1.2,-14.0 2.8,-13.6 L 6.0,-16.8 C 7.5,-13.6 8.6,-10.2 7.6,-6.8 C 6.2,-3.0 -5.8,-3.0 -7.2,-6.8 Z"
+          fill="url(#brCatBody)" stroke="#F6D0EA" stroke-opacity="0.86" stroke-width="0.85" stroke-linejoin="round"/>
+
+    <!-- Inner ear pink tint -->
+    <path d="M -5.4,-14.5 L -3.5,-12.5 L -5.8,-11.5 Z" fill="#D86CA4" opacity="0.65"/>
+    <path d="M 5.8,-14.5 L 3.9,-12.5 L 6.2,-11.5 Z" fill="#D86CA4" opacity="0.65"/>
+
+    <!-- Glowing Neri rose-lavender cat eyes -->
+    <ellipse cx="-2.6" cy="-8.6" rx="1.35" ry="1.55" fill="#FFD8F0"/>
+    <ellipse cx="3.0" cy="-8.6" rx="1.35" ry="1.55" fill="#FFD8F0"/>
+    <circle cx="-2.9" cy="-9.1" r="0.45" fill="#FFFFFF"/>
+    <circle cx="2.7" cy="-9.1" r="0.45" fill="#FFFFFF"/>
   </g>
 
-  <!-- Tiny star sparkle above cat -->
-  <path d="M 40,22.2 L 40.7,24.1 L 42.6,24.8 L 40.7,25.5 L 40,27.4 L 39.3,25.5 L 37.4,24.8 L 39.3,24.1 Z"
-        fill="#FFF5FC" opacity="0.88" filter="url(#cbrGlow)"/>
+  <!-- Bright 4-point starlight the cat is gazing up at -->
+  <path d="M 82,22.2 L 83.2,25.4 L 86.4,26.6 L 83.2,27.8 L 82,31.0 L 80.8,27.8 L 77.6,26.6 L 80.8,25.4 Z"
+        fill="#FFF7FD" opacity="0.95" filter="url(#brGlow)"/>
+  <circle cx="54" cy="58" r="1.25" fill="#F6C2E4" opacity="0.82"/>
 </svg>

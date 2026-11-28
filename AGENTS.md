@@ -14,7 +14,7 @@
 | 会话消息和输入框使用磨砂玻璃，同时保留全局透明度 | `node test/live-glass.mjs` 检查真实消息、回复和输入框，截图验证可读性；`node test/live-codex.mjs` 验证全局透明度 |
 | 音理主题素材必须真实解码，阅读列居中且最大 860px，装饰不能拦截输入，字体跟随应用设置 | `node test/live-neri.mjs` 检查资源、宽窄屏居中、字体原生值、低透明度边框、聚焦及截图 |
 | 自定义侧栏图标原位替换 SVG，18px 统一尺寸与文字对齐，新聊天使用深色底 | `node test/live-sidebar.mjs` 检查真实图标、色值、对齐、项目折叠和点击命中 |
-| 输入胶囊六片SVG角饰须固定比例，随单/多行尺寸定位；替换旧PNG外圈，全部装饰不拦截输入，保留回底间距与茜红按钮 | node test/composer-border.mjs + node test/live-composer.mjs 检查资源解码、角饰定位、宽窄/展开、焦点、点击、底部间距和恢复 |
+| 输入胶囊v2六片SVG角饰须固定96×72比例及-22px定位，内层虚线缝边不拦截输入，随单/多行尺寸定位；替换旧PNG外圈，全部装饰不拦截输入，保留回底间距与茜红按钮 | node test/composer-border.mjs + node test/live-composer.mjs 检查资源解码、角饰定位、宽窄/展开、焦点、点击、底部间距和恢复 |
 | 思考强度滑块须用宿主真实档位、松手才提交、键盘不与菜单冲突、切模型后更新档位并可恢复原生 | `node test/live-effort-slider.mjs` 在真实 Codex 验证拖动、方向键和 Home/End、五/六档模型、重开同步及恢复，结束还原模型与强度 |
 
 | 额度双环须以内联SVG同步真实剩余额度，保留原生节点，0%无残点，多实例ID唯一且菜单可用 | `node test/live-quota.mjs` 修改并恢复显示属性，验证进度、聚焦、ID与原生菜单 |

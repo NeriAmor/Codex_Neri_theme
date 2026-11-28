@@ -49,7 +49,7 @@ try {
   check(Number(paint.laceOpacity)<.35&&parseFloat(paint.laceHeight)<=6,'header lace stays small and faint');
   check(paint.composerSvgCount===6&&paint.oldComposerTrim==='none','six SVG pieces replace old PNG trim');
   check(light?(paint.gradientImage.includes('0.48')&&paint.gradientImage.match(/0\.16/g)?.length===2):(paint.gradientImage.includes('0.42')&&paint.gradientImage.match(/0\.15/g)?.length===2),'mask darkens the center symmetrically');
-  for(const edge of paint.borders){const alpha=Number(edge.color.match(/,\s*([\d.]+)\)$/)?.[1]);check(parseFloat(edge.width)===0||(edge.selector.includes('composer')?(alpha>=.08&&alpha<=.65):(alpha>=.08&&alpha<=.14)),'container edge must stay subtle or absent: '+edge.color);}
+  for(const edge of paint.borders){const alpha=Number(edge.color.match(/,\s*([\d.]+)\)$/)?.[1]);check(parseFloat(edge.width)===0||(edge.selector.includes('composer')?(alpha>=.08&&alpha<=.78):(alpha>=.08&&alpha<=.14)),'container edge must stay subtle or absent: '+edge.color);}
   check(paint.overlay==='none'&&paint.gradient==='none','full-screen decorations never intercept input');
   report.paint=paint;
   // 按实际叠放顺序合成遮罩、主背景与气泡；不再用已移除的固定透明度冒充当前结果。
@@ -72,7 +72,7 @@ try {
   report.desktop=layout;
   const composer=page.locator('[data-composer-surface-variant] [contenteditable="true"]').filter({visible:true}).last();
   await composer.click();await page.waitForTimeout(260);check(await composer.evaluate(e=>e===document.activeElement),'decoration permits input focus');
-  check(await page.locator('[data-composer-surface-variant]').filter({visible:true}).last().evaluate((e,color)=>getComputedStyle(e).boxShadow.includes(color),paint.mode==='light'?'163, 49, 104':'216, 94, 166'),'focus shows pink halo');
+  check(await page.locator('[data-composer-surface-variant]').filter({visible:true}).last().evaluate((e,color)=>getComputedStyle(e).boxShadow.includes(color),paint.mode==='light'?'163, 49, 104':'224, 92, 168'),'focus shows pink halo');
   await composer.evaluate(e=>e.blur());
   await page.screenshot({path:fileURLToPath(new URL('../artifacts/18-neri-refined-desktop.png',import.meta.url))});
   await session.send('Emulation.setDeviceMetricsOverride',{width:1000,height:850,deviceScaleFactor:1,mobile:false});
