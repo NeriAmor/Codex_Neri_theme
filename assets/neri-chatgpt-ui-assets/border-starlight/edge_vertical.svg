@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 400" width="36" height="400">
+  <!-- Neri Starlight Frame: Seamless Vertical Edge Trim (36x400) -->
+  <defs>
+    <linearGradient id="slEvRail" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="10" y2="400">
+      <stop offset="0%" stop-color="#D4BCEB" stop-opacity="0.44"/>
+      <stop offset="50%" stop-color="#FCE4F6" stop-opacity="0.78"/>
+      <stop offset="100%" stop-color="#D4BCEB" stop-opacity="0.44"/>
+    </linearGradient>
+    <linearGradient id="slEvWave" gradientUnits="userSpaceOnUse" x1="21" y1="0" x2="21" y2="400">
+      <stop offset="0%" stop-color="#F0C8E8" stop-opacity="0.50"/>
+      <stop offset="50%" stop-color="#FFEAF8" stop-opacity="0.76"/>
+      <stop offset="100%" stop-color="#F0C8E8" stop-opacity="0.50"/>
+    </linearGradient>
+    <radialGradient id="slEvStar" cx="45%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F9B4DB"/>
+      <stop offset="100%" stop-color="#C44E92"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer starry-railway rail (exact x=10) -->
+  <line x1="10" y1="0" x2="10" y2="400" stroke="url(#slEvRail)" stroke-width="1.55"/>
+  <!-- Inner railway stitch (exact x=17) -->
+  <line x1="17" y1="0" x2="17" y2="400" stroke="#F4CCE8" stroke-opacity="0.34" stroke-width="0.9" stroke-dasharray="3 5"/>
+
+  <!-- Seamless scalloped cape-lace wave (exact x=17 baseline, amplitude 8) -->
+  <path d="M 17,0 Q 25,16 17,32 Q 25,48 17,64 Q 25,80 17,96 Q 25,112 17,128 Q 25,144 17,160 Q 25,176 17,192 Q 25,208 17,224 Q 25,240 17,256 Q 25,272 17,288 Q 25,304 17,320 Q 25,336 17,352 Q 25,368 17,384 Q 21,392 17,400"
+        fill="#F8D8F0" fill-opacity="0.07" stroke="url(#slEvWave)" stroke-width="1.05"/>
+
+  <!-- Center Starry-Railway Station Emblem -->
+  <path d="M 10,184 C 14,189 15,194 15,200 C 15,206 14,211 10,216" fill="none" stroke="#FCE0F4" stroke-opacity="0.65" stroke-width="0.9"/>
+  <path d="M 24.5,192 L 26.7,197.8 L 32.5,200 L 26.7,202.2 L 24.5,208 L 22.3,202.2 L 16.5,200 L 22.3,197.8 Z"
+        fill="url(#slEvStar)" stroke="#FFF8FD" stroke-width="0.65"/>
+
+  <!-- Symmetrical starlight diamonds & pearl beads -->
+  <path d="M 20.5,100 L 24.5,96.5 L 28.5,100 L 24.5,103.5 Z" fill="#FCE6F6" fill-opacity="0.72" stroke="#FFFFFF" stroke-width="0.5"/>
+  <path d="M 20.5,300 L 24.5,296.5 L 28.5,300 L 24.5,303.5 Z" fill="#FCE6F6" fill-opacity="0.72" stroke="#FFFFFF" stroke-width="0.5"/>
+
+  <g fill="#FFEAF8" opacity="0.65">
+    <circle cx="21" cy="48" r="1.2"/><circle cx="21" cy="144" r="1.2"/>
+    <circle cx="21" cy="256" r="1.2"/><circle cx="21" cy="352" r="1.2"/>
+  </g>
+</svg>

@@ -6,10 +6,11 @@ const target=(await listCdpTargets(9340)).find(t=>t.url==='app://-/index.html');
 const session=await CdpSession.connect(target.webSocketDebuggerUrl);
 async function capture(name){const s=await session.send('Page.captureScreenshot',{format:'png'});writeFileSync(new URL(name,artifacts),Buffer.from(s.data,'base64'));}
 try{
+  for(let i=0;i<50;i++){if(await session.evaluate('Boolean(document.querySelector("#codex-prism-stage video")?.readyState>=2)'))break;await new Promise(r=>setTimeout(r,150));}
   const geometry=await session.evaluate(`(()=>{const svg=document.querySelector('[data-neri-frame-lines]');const t=svg.querySelector('[data-frame-edge="top"]'),b=svg.querySelector('[data-frame-edge="bottom"]');return {sameGeometry:t.innerHTML===b.innerHTML,mirror:b.getAttribute('transform'),width:innerWidth,height:innerHeight,corner:parseFloat(getComputedStyle(document.querySelector('[data-neri-frame-piece="corner-tl"]')).width),clickThrough:[...document.querySelectorAll('#codex-prism-frame,#codex-prism-frame *')].every(e=>getComputedStyle(e).pointerEvents==='none'),effects:window.__codexTypingEffects.status(),videoReady:document.querySelector('#codex-prism-stage video').readyState>=2}})()`);
   assert.ok(geometry.sameGeometry&&geometry.clickThrough&&geometry.videoReady);assert.equal(geometry.effects.length,2);
   await capture('34-independent-theme.png');
-  await session.evaluate(`(()=>{const s=document.createElement('style');s.id='neri-frame-pixel-test';s.textContent='body > *:not(#codex-prism-frame){visibility:hidden!important}';document.head.append(s)})()`);
+  await session.evaluate(`(()=>{const s=document.createElement('style');s.id='neri-frame-pixel-test';s.textContent='body > *:not(#codex-prism-frame){visibility:hidden!important}#codex-prism-frame{mask-image:none!important;-webkit-mask-image:none!important}';document.head.append(s)})()`);
   await capture('frame-pixels.png');
   // 故意放回曾漏掉的错位：容器尺寸不变、内部图案偏移，像素检查必须拒绝。
   await session.evaluate(`document.querySelector('[data-frame-edge="top"]').setAttribute('transform','translate(2 0)')`);

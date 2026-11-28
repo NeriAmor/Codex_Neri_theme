@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.8
+# Neri Desktop Theme 1.1.9
 
 Windows ChatGPT / Codex 桌面外观插件。
 
@@ -71,3 +71,9 @@ python test/frame-pixels.py
 ## 1.1.8
 
 移除输入框底部模型/语音/发送控制区的原生灰色长条底，直接透出音理主题底色，保留内部按钮的颜色与交互。
+
+## 1.1.9
+
+整体窗口边框换成「星空列车 · 音理星轨华框」：星轨卷草、四角星芒罗盘与斗篷蕾丝，和输入框装饰区分。角饰采用160–240px自适应尺寸，原始横纵SVG边条按统一比例平铺并镜像，保持上下对齐与点击穿透。
+
+验证：`node test/frame-starlight.mjs`、`node test/live-frame.mjs`、`python test/frame-pixels.py`、`node test/live-frame-visibility.mjs`。菜单文字与头像区域自动避让，字体或窗口尺寸变化时更新。

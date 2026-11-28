@@ -33,9 +33,11 @@ html[data-codex-prism] body::after {
 html[data-codex-prism] #codex-prism-frame {
   /* 宿主侧栏与 Windows 菜单栏为 z=40；装饰置于其上，原生弹出层与设置面板仍在上方。 */
   display:block; position:fixed; inset:0; z-index:45; opacity:.82;
-  --neri-corner-size:min(280px,24vw,40vh);
-  --neri-edge-inset:calc(var(--neri-corner-size) * .928571);
-  /* 角纹原始320px、边条36px：共用缩放比例，避免连接处上下错层。 */
+  --neri-corner-size:clamp(160px,18vw,240px);
+  --neri-corner:var(--neri-corner-size);
+  --neri-edge:calc(var(--neri-corner-size) * 36 / 320);
+  --neri-edge-inset:var(--neri-corner-size);
+  /* 新星轨华框：320px角纹与36px边条共用比例，边条从角纹末端开始。 */
   --neri-trim-size:calc(var(--neri-corner-size) * .1125);
   pointer-events:none;
 }
