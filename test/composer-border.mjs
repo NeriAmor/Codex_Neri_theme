@@ -14,10 +14,12 @@ const geometry=()=>page.locator('#capsule').evaluate(e=>{
 });
 try{
   await page.route('https://neri-assets.test/**',route=>route.fulfill({path:fileURLToPath(new URL('../assets/neri-chatgpt-ui-assets/'+new URL(route.request().url()).pathname.slice(1),import.meta.url)),contentType:'image/svg+xml'}));
-  await page.setContent('<style>body{margin:0;font:16px system-ui}main{padding:80px 24px}[data-composer-surface-variant]{max-width:860px;margin:40px auto;padding:12px;display:flex;gap:12px;align-items:center}textarea{flex:1;min-width:0;background:transparent;color:inherit;font:inherit;resize:vertical}button{width:32px;height:32px}</style><main data-app-shell-frame><div id="capsule" data-composer-surface-variant><button id="plus">+</button><textarea placeholder="输入消息"></textarea><button id="send" data-testid="send-button">↑</button></div></main>');
+  await page.setContent('<style>body{margin:0;font:16px system-ui}main{padding:80px 24px}[data-composer-surface-variant]{max-width:860px;margin:40px auto;padding:12px;display:flex;gap:12px;align-items:center}textarea{flex:1;min-width:0;background:transparent;color:inherit;font:inherit;resize:vertical}button{width:32px;height:32px}</style><main data-app-shell-frame><div id="capsule" data-composer-surface-variant><button id="plus">+</button><textarea placeholder="输入消息"></textarea><div data-composer-trailing-controls style="background:rgb(41,45,51);width:30%"><button id="send" data-testid="send-button">↑</button></div></div></main>');
   await page.evaluate(script);await page.evaluate(p=>window.__codexPrism.apply(p),payload);
   await page.waitForFunction(()=>document.querySelectorAll('#capsule .neri-composer-decor img').length===6&&[...document.querySelectorAll('#capsule img')].every(i=>i.complete&&i.naturalWidth>0));
   const normal=await geometry();
+  check(await page.locator('[data-composer-trailing-controls]').evaluate(e=>getComputedStyle(e).backgroundColor==='rgba(0, 0, 0, 0)'), 'native grey control strip becomes transparent');
+  check(await page.locator('#send').evaluate(e=>getComputedStyle(e).backgroundColor==='rgb(201, 74, 97)'), 'send retains its own crimson background');
   check(normal.pieces.length===6,'all six original SVGs decode');
   check(normal.radius==='24px'&&normal.overflow==='visible','outer capsule retains required geometry');
   check(normal.old[0]===String.fromCharCode(34,34)&&normal.old[1]==='none','v2 stitch replaces old outer outline and PNG');
@@ -31,6 +33,7 @@ try{
   await page.evaluate(()=>document.documentElement.dataset.theme='light');
   await page.waitForFunction(()=>document.documentElement.dataset.neriAppearance==='light');
   await page.waitForFunction(()=>getComputedStyle(document.querySelector('#capsule')).backgroundColor==='rgba(255, 250, 254, 0.25)');
+  check(await page.locator('[data-composer-trailing-controls]').evaluate(e=>getComputedStyle(e).backgroundColor==='rgba(0, 0, 0, 0)'), 'light mode also clears native strip');
   check((await geometry()).background==='rgba(255, 250, 254, 0.25)','light SVG capsule follows same opacity');
   check(await page.locator('.neri-composer-decor').evaluate(e=>getComputedStyle(e).filter.includes('brightness(0.65)')),'light decoration has adapted contrast');
   await page.evaluate(p=>{document.documentElement.dataset.theme='dark';window.__codexPrism.apply(p);},payload);
@@ -55,6 +58,7 @@ try{
   check(await page.locator('#capsule .neri-composer-decor').count()===1,'React replacement recovers without duplicates');
   await page.evaluate(p=>window.__codexPrism.apply({...p,enabled:false}),payload);
   check(await page.locator('.neri-composer-decor').count()===0,'disable clears decorations');
+  check(await page.locator('[data-composer-trailing-controls]').evaluate(e=>getComputedStyle(e).backgroundColor==='rgb(41, 45, 51)'), 'disable restores native control background');
   await page.evaluate(p=>window.__codexPrism.apply(p),payload);
   check(await page.locator('.neri-composer-decor').count()===1,'enable restores exactly one decoration');
   await page.evaluate(()=>window.__codexPrism.destroy());

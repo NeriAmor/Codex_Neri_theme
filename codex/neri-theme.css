@@ -482,3 +482,10 @@ html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-vari
 html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap::before { background:transparent!important; box-shadow:none!important; }
 html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant].neri-composer-wrap::before { border-color:rgba(133,80,146,.18)!important; }
 html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant].neri-composer-wrap:focus-within::before { border-color:rgba(163,49,104,.32)!important; }
+
+/* 原生底部控制区会用独立的灰色布局底。只清除这一层，保留内部模型/语音/发送按钮。 */
+html[data-codex-prism] [data-composer-surface-variant] [data-composer-trailing-controls] {
+  --composer-layout-surface-background:transparent!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}

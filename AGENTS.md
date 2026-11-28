@@ -36,3 +36,5 @@
 | 边缘装饰必须在完整宿主的侧栏/顶栏上可见，不能只隐藏内容检查几何；深浅模式均不拦截输入 | node test/live-frame-visibility.mjs + test/frame-visibility.py；旧层级须被拒绝 |
 
 | 透明度20%–98%和模糊0–40px须在主聊天背景/侧栏/两种气泡/输入框均生效，深浅模式都不可设隐藏下限；侧栏外壳不得重复叠加玻璃 | node test/live-glass-controls.mjs + python test/glass-pixels.py（真实键盘操作、低中高档、重开及还原、固定壁纸帧像素变化）；后台范围与面板一致 |
+
+| 输入框底部原生控制区外壳必须透明，不能覆盖内部模型/语音/发送按钮 | node test/composer-border.mjs + node test/live-composer.mjs 检查长条背景、主按钮颜色和命中 |

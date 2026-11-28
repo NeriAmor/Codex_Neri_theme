@@ -8,15 +8,17 @@ const errors=[];const onError=e=>errors.push(e.message);page.on('pageerror',onEr
 let checks=0;const check=(v,m)=>{assert.ok(v,m);checks++;};
 let scrollState;
 try {
+  await page.bringToFront();
   const action=page.locator('[data-composer-surface-variant] button:has(> .icon-primary-action)').filter({visible:true}).last();
   const scroll=page.getByRole('button',{name:'滚动到底部',exact:true});
   await action.waitFor();await page.mouse.move(600,50);
   const capsule=await action.evaluate(button=>{
     const e=button.closest('[data-composer-surface-variant]'),c=getComputedStyle(e),r=e.getBoundingClientRect();
     const pieces=[...e.querySelectorAll('.neri-composer-decor img')].map(i=>{const css=getComputedStyle(i);return {name:i.className,ready:i.complete&&i.naturalWidth>0,width:css.width,height:css.height,fit:css.objectFit,events:css.pointerEvents,top:css.top,left:css.left,right:css.right,bottom:css.bottom};});
-    return {position:c.position,overflow:c.overflow,pieces,old:[getComputedStyle(e,'::before').content,getComputedStyle(e,'::after').content],stitch:{border:getComputedStyle(e,'::before').borderTopStyle,inset:getComputedStyle(e,'::before').top,events:getComputedStyle(e,'::before').pointerEvents},gap:innerHeight-Math.max(...[...e.querySelectorAll('.neri-composer-decor img')].map(i=>i.getBoundingClientRect().bottom)),containsControls:[...e.querySelectorAll('button,[contenteditable="true"]')].filter(x=>x.getBoundingClientRect().width>0).every(x=>{const b=x.getBoundingClientRect();return b.left>=r.left-1&&b.right<=r.right+1&&b.bottom<=r.bottom+1;})};
+    return {position:c.position,overflow:c.overflow,pieces,trailing:[...e.querySelectorAll('[data-composer-trailing-controls]')].map(n=>getComputedStyle(n).backgroundColor),old:[getComputedStyle(e,'::before').content,getComputedStyle(e,'::after').content],stitch:{border:getComputedStyle(e,'::before').borderTopStyle,inset:getComputedStyle(e,'::before').top,events:getComputedStyle(e,'::before').pointerEvents},gap:innerHeight-Math.max(...[...e.querySelectorAll('.neri-composer-decor img')].map(i=>i.getBoundingClientRect().bottom)),containsControls:[...e.querySelectorAll('button,[contenteditable="true"]')].filter(x=>x.getBoundingClientRect().width>0).every(x=>{const b=x.getBoundingClientRect();return b.left>=r.left-1&&b.right<=r.right+1&&b.bottom<=r.bottom+1;})};
   });
   check(capsule.position==='relative'&&capsule.overflow==='visible','outer capsule allows decoration outside its bounds');
+  check(capsule.trailing.length>0&&capsule.trailing.every(c=>c==='rgba(0, 0, 0, 0)'), 'native grey control strip is transparent');
   check(capsule.containsControls,'capsule contains editor and all left/right controls');
   check(capsule.old[0]===String.fromCharCode(34,34)&&capsule.old[1]==='none'&&capsule.stitch.border==='dashed'&&capsule.stitch.inset==='4px'&&capsule.stitch.events==='none','v2 inner stitch replaces old outline without intercepting clicks');
   check(capsule.pieces.length===6&&capsule.pieces.every(i=>i.ready),'all six bundled SVG images decode in real host');
@@ -33,6 +35,7 @@ try {
   check((normal.color.match(/\d+/g)||[]).slice(0,3).every(v=>Number(v)>=220),'action icon remains light');
   check(normal.radius==='50%','primary action stays circular');
   await action.hover();
+  for(let i=0;i<20;i++){if(await action.evaluate(e=>getComputedStyle(e).backgroundColor)==='rgb(223, 94, 117)')break;await page.waitForTimeout(50);}
   check(await action.evaluate(e=>getComputedStyle(e).backgroundColor)==='rgb(223, 94, 117)','hover uses the lighter theme red');
   // 只做点击命中检查，不启动语音、停止生成或发送内容。
   if(await action.isEnabled()){await action.click({trial:true});checks++;}
