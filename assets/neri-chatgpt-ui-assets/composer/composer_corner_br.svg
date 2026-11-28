@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Neri Composer Corner BR: Filigree Arc + Tiny Starlight Black Cat Silhouette -->
+  <defs>
+    <linearGradient id="cbrArc" gradientUnits="userSpaceOnUse" x1="4" y1="44" x2="44" y2="4">
+      <stop offset="0%" stop-color="#D7C3EC" stop-opacity="0"/>
+      <stop offset="28%" stop-color="#E8CBEB" stop-opacity="0.65"/>
+      <stop offset="55%" stop-color="#FFF5FC" stop-opacity="0.92"/>
+      <stop offset="80%" stop-color="#E8CBEB" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#D7C3EC" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="cbrGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.0" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer corner arc hugging r=22px composer rim -->
+  <path d="M 4,40 L 18,40 A 22,22 0 0,0 40,18 L 40,6"
+        fill="none" stroke="url(#cbrArc)" stroke-width="1.35" stroke-linecap="round" filter="url(#cbrGlow)"/>
+
+  <!-- Inner delicate lace hairline -->
+  <path d="M 10,36.5 L 18,36.5 A 18.5,18.5 0 0,0 36.5,18 L 36.5,13"
+        fill="none" stroke="#F4CCE8" stroke-opacity="0.3" stroke-width="0.8" stroke-dasharray="2.2 2.4"/>
+
+  <!-- Mini black cat head silhouette peeking softly at bottom-right curve -->
+  <g transform="translate(33.4, 34.0) rotate(-18)" filter="url(#cbrGlow)">
+    <path d="M -5.2,2.4 C -5.8,-0.6 -5.0,-3.2 -4.0,-5.4 L -1.6,-3.2 C -0.6,-3.5 0.6,-3.5 1.6,-3.2 L 4.0,-5.4 C 5.0,-3.2 5.8,-0.6 5.2,2.4 C 4.4,4.8 -4.4,4.8 -5.2,2.4 Z"
+          fill="#20162E" stroke="#F4CBE8" stroke-opacity="0.8" stroke-width="0.75" stroke-linejoin="round"/>
+    <!-- Glowing rose-lavender cat eyes -->
+    <circle cx="-1.9" cy="0.2" r="0.85" fill="#FFD4EE"/>
+    <circle cx="1.9" cy="0.2" r="0.85" fill="#FFD4EE"/>
+  </g>
+
+  <!-- Tiny star sparkle above cat -->
+  <path d="M 40,22.2 L 40.7,24.1 L 42.6,24.8 L 40.7,25.5 L 40,27.4 L 39.3,25.5 L 37.4,24.8 L 39.3,24.1 Z"
+        fill="#FFF5FC" opacity="0.88" filter="url(#cbrGlow)"/>
+</svg>

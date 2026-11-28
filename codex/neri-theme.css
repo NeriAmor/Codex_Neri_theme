@@ -96,21 +96,9 @@ html[data-codex-prism] [data-composer-surface-variant][data-composer-surface-var
   color: var(--neri-text)!important; border-color: rgba(255,249,252,.12)!important;
   border-radius: 24px!important; caret-color: var(--neri-accent);
 }
-/* 该节点包含输入区和全部操作按钮；纯 CSS 外圈随多行高度伸缩。 */
-html[data-codex-prism] [data-composer-surface-variant]::before {
-  content:""; position:absolute; inset:-3px -6px!important;
-  border:1px solid rgba(255,249,252,.10)!important; border-radius:27px;
-  background:transparent!important; box-shadow:0 0 8px rgba(232,125,166,.06)!important;
-  pointer-events:none; z-index:-1;
-}
-html[data-codex-prism] [data-composer-surface-variant]::after {
-  content: ""; position: absolute; inset:auto 24px -3px!important;
-  height:5px; border-radius:0; pointer-events: none;
-  /* PNG 只保留胶囊下缘外侧的 5px 微光，不再绘制穿过按钮的图片框。 */
-  background: var(--neri-trim) center bottom / 100% auto no-repeat;
-  opacity: .4; filter: brightness(.45); z-index: -1;
-  mix-blend-mode: var(--neri-overlay-blend);
-}
+/* 新的六片 SVG 边框取代旧 CSS 外圈和 PNG 微光条，避免重复描边。 */
+html[data-codex-prism] [data-composer-surface-variant]::before,
+html[data-codex-prism] [data-composer-surface-variant]::after { content:none!important; pointer-events:none; }
 html[data-codex-prism] [data-composer-surface-variant]:focus-within {
   box-shadow: 0 0 0 1px rgba(232,125,166,.20), 0 0 12px rgba(232,125,166,.08)!important;
 }
@@ -368,3 +356,106 @@ html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-ne
 html[data-codex-prism][data-neri-appearance="light"] :is([data-app-shell-titlebar] [data-neri-top-icon]::before,button[data-sidebar-destination] > span::before) { filter:brightness(.60) saturate(.85); }
 html[data-codex-prism][data-neri-appearance="light"] #app-shell-sidebar [data-app-action-sidebar-section-heading="Recents"] [data-app-action-sidebar-section-toggle]::before { filter:drop-shadow(0 1px 1px rgba(88,57,106,.55)); }
 html[data-codex-prism][data-neri-appearance="light"] #codex-prism-button { color:var(--neri-text); border-color:var(--neri-edge); }
+
+/* ==========================================================================
+   Neri Starry-Lace Composer (Chat Input Box) Border Theme
+   Responsive & height-adaptive (works for both single-line pill & multi-line)
+   ========================================================================== */
+
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap {
+  position: relative!important;
+  border-radius: 24px!important;
+  /* 保留主题统一透明度，不带入素材预览页的固定底色。 */
+  background:var(--neri-input)!important;
+  backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%)!important;
+  -webkit-backdrop-filter: blur(var(--cp-blur,18px)) saturate(135%)!important;
+  border: 1px solid rgba(236, 212, 248, 0.24)!important;
+  box-shadow:
+    0 10px 30px rgba(7, 4, 18, 0.56),
+    inset 0 1px 0 rgba(255, 240, 252, 0.16),
+    inset 0 0 18px rgba(214, 120, 186, 0.06)!important;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  /* Must allow corner ornaments to sit cleanly on the rim without clipping */
+  overflow: visible!important;
+}
+
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap:hover {
+  border-color: rgba(244, 192, 228, 0.42);
+}
+
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap:focus-within {
+  border-color: rgba(246, 166, 214, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(246, 166, 214, 0.26),
+    0 0 22px rgba(216, 94, 166, 0.26),
+    0 12px 34px rgba(7, 4, 18, 0.62),
+    inset 0 1px 0 rgba(255, 244, 252, 0.24),
+    inset 0 0 22px rgba(243, 139, 194, 0.10)!important;
+}
+
+/* Decorative overlay layer (zero pointer interception) */
+.neri-composer-decor {
+  position: absolute!important;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.neri-c-corner {
+  position: absolute!important;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  opacity: 0.86;
+  transition: opacity 0.22s ease, filter 0.22s ease;
+}
+
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap:focus-within .neri-c-corner {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(246, 166, 214, 0.45));
+}
+
+/* Aligned so the r=22px arc inside each 48x48 SVG sits right on the 24px border */
+.neri-c-tl { top: -8px; left: -8px; }
+.neri-c-tr { top: -8px; right: -8px; }
+.neri-c-bl { bottom: -8px; left: -8px; }
+.neri-c-br { bottom: -8px; right: -8px; }
+
+.neri-c-top {
+  position: absolute!important;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(260px, 52%);
+  height: 18px;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.22s ease;
+}
+
+.neri-c-bottom {
+  position: absolute!important;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(220px, 44%);
+  height: 14px;
+  pointer-events: none;
+  opacity: 0.78;
+  transition: opacity 0.22s ease;
+}
+
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap:focus-within .neri-c-top,
+html[data-codex-prism] [data-composer-surface-variant].neri-composer-wrap:focus-within .neri-c-bottom {
+  opacity: 1;
+}
+
+/* 原图各自保持 viewBox 比例：中间饰条缩窄时整体缩放，不能填满后拉长。 */
+html[data-codex-prism] .neri-composer-decor { overflow:visible; }
+html[data-codex-prism] .neri-composer-decor img { display:block; object-fit:contain; user-select:none; pointer-events:none; }
+html[data-codex-prism] [data-thread-composer-backdrop] { padding-bottom:12px!important; }
+/* 浅色模式压深银白花纹，继续保持透明度/模糊由用户滑块控制。 */
+html[data-codex-prism][data-neri-appearance="light"] .neri-composer-decor { filter:brightness(.65) saturate(.8); }
+html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant].neri-composer-wrap { border-color:rgba(133,80,146,.22)!important; box-shadow:0 5px 18px rgba(66,39,82,.09),inset 0 1px 0 rgba(255,255,255,.65)!important; }
+html[data-codex-prism][data-neri-appearance="light"] [data-composer-surface-variant].neri-composer-wrap:focus-within { border-color:rgba(163,49,104,.45)!important; box-shadow:0 0 0 1px rgba(163,49,104,.2),0 0 22px rgba(163,49,104,.16)!important; }
+@media(prefers-reduced-motion:reduce){ html[data-codex-prism] .neri-composer-wrap,html[data-codex-prism] .neri-composer-decor * { transition:none!important; } }

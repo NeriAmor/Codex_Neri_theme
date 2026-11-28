@@ -1,4 +1,4 @@
-# Neri Desktop Theme 1.1.5
+# Neri Desktop Theme 1.1.6
 
 Windows ChatGPT / Codex 桌面外观插件。
 
@@ -57,3 +57,9 @@ python test/frame-pixels.py
 修复玻璃不透明度和模糊调节：统一后台与滑块的20%–98%范围，移除气泡及浅色模式吞掉低档调节的透明度下限；主聊天背景接入模糊，并取消侧栏外壳重复的玻璃层。0px可关闭背景模糊，深浅两种模式均响应。
 
 检查：`node test/live-glass-controls.mjs` 和 `python test/glass-pixels.py` 操作真实滑块，检查主背景、侧栏、AI/用户气泡及输入框的低中高档、重开保留与设置恢复。
+
+## 1.1.6
+
+输入框边框替换为六片自适应音理星夜蕾丝SVG：白羽发卡、绯红蝴蝶结、星芒、小黑猫及上下饰条。四角保持48px，不随输入框宽度或多行高度拉伸；聚焦显示粉紫光晕，浅色模式自动调整装饰深浅。保留透明度/模糊调节，并移除旧PNG外圈。
+
+检查：`node test/composer-border.mjs`、`node test/live-composer.mjs`。

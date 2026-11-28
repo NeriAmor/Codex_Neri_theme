@@ -5,9 +5,10 @@ import { CdpSession, listCdpTargets } from '../sidecars/prism_studio/cdp-bridge.
 import { buildBuiltinAuroraSvg } from '../src/engine/runtime/web-shim.mjs';
 import { effortSliderScript } from './effort-slider/bundle.mjs';
 import { frameScript } from './frame.mjs';
+import { composerBorderScript } from './composer-border.mjs';
 import { quotaIconScript } from './quota-icon.mjs';
 
-export const script = readFileSync(new URL('./inject.js', import.meta.url), 'utf8').replace('/* NERI_THEME_CSS */', readFileSync(new URL('./neri-theme.css', import.meta.url), 'utf8')).replace('/* NERI_QUOTA_SCRIPT */',quotaIconScript).replace('/* NERI_FRAME_SCRIPT */',frameScript);
+export const script = readFileSync(new URL('./inject.js', import.meta.url), 'utf8').replace('/* NERI_THEME_CSS */', readFileSync(new URL('./neri-theme.css', import.meta.url), 'utf8')).replace('/* NERI_QUOTA_SCRIPT */',quotaIconScript).replace('/* NERI_FRAME_SCRIPT */',frameScript).replace('/* NERI_COMPOSER_SCRIPT */',composerBorderScript);
 // 本地素材统一前缀；随插件移动，不依赖用户的临时素材目录。
 const neriAssetBase = appFileUrl(fileURLToPath(new URL('../assets/neri-chatgpt-ui-assets/', import.meta.url)));
 const neriOverlayMode = process.env.CODEX_PRISM_NERI_OVERLAY_MODE === 'screen' ? 'screen' : 'transparent';

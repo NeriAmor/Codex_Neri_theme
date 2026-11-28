@@ -65,6 +65,7 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
   hideProviderLabel();
   function mount() {
     /* NERI_FRAME_SCRIPT */
+    /* NERI_COMPOSER_SCRIPT */
     frame=window.__neriFrame.element;
     if (!stage?.isConnected) { stage = document.createElement('div'); stage.id = 'codex-prism-stage'; stage.setAttribute('aria-hidden','true'); document.body.prepend(stage); }
     if (!style?.isConnected) { style = document.createElement('style'); style.textContent = css; document.head.append(style); }
@@ -78,7 +79,7 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
     const group=more?.parentElement||rail?.querySelector('[data-appearance]');
     if(group&&button.parentElement!==group){if(more)more.after(button);else group.append(button);}
   }
-  function clear() { clearInterval(slideTimer); stage?.replaceChildren(); current = ''; mediaError = ''; document.documentElement.removeAttribute('data-codex-prism'); }
+  function clear() { window.__neriComposerBorder?.update('',false); clearInterval(slideTimer); stage?.replaceChildren(); current = ''; mediaError = ''; document.documentElement.removeAttribute('data-codex-prism'); }
   function togglePanel(){if(window.__codexPrismPanel)window.__codexPrismPanel.toggle();else queue.push('studio');}
   function key(e) {
     if(e.key==='Escape'&&e.type==='keydown')escapeDownSeen=true;
@@ -104,6 +105,7 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
       lastPayload = p;
       document.documentElement.dataset.neriAppearance = appearance();
       mount();
+      window.__neriComposerBorder.update(p.neriAssetBase,p.enabled && !suppressed);
       // 只定位聊天页右上角工具栏，保留原生按钮、Tooltip 和点击事件。
       const topIcons={
         more:'button:is([aria-label="聊天操作"],[aria-label="Chat actions"],[aria-label="More options"])',
@@ -167,6 +169,6 @@ html[data-codex-prism] [data-codex-prism-provider-label] {display:none!important
       if(video) { video.loop=!(c.rotationEnabled && c.rotationTrigger==='videoEnd'); video.playbackRate=c.playbackRate||1; video.muted=c.audioEnabled!==true; video.volume=Math.max(0,Math.min(1,c.volume??.5)); if(c.paused)video.pause();else visibility(); }
     },
     drain() { const actions=queue.splice(0); if(mediaError)actions.push('error:'+mediaError); return actions; },
-    destroy() { appearanceObserver.disconnect(); systemAppearance.removeEventListener('change',syncAppearance); delete document.documentElement.dataset.neriAppearance; window.__neriFrame?.destroy(); window.__codexTypingEffects?.dispose(); window.__codexPrismQuota?.destroy(); providerLabelObserver.disconnect(); document.querySelectorAll('[data-neri-top-icon]').forEach(e=>e.removeAttribute('data-neri-top-icon')); document.querySelectorAll('[data-codex-prism-provider-label]').forEach(label => label.removeAttribute('data-codex-prism-provider-label')); clear(); window.__codexPrismPanel?.destroy(); stage?.remove(); frame?.remove(); style?.remove(); button?.remove(); window.removeEventListener('keydown',key,true); window.removeEventListener('keyup',panelKeyUp,true); document.removeEventListener('visibilitychange',visibility); delete window.__codexPrism; },
+    destroy() { window.__neriComposerBorder?.destroy(); appearanceObserver.disconnect(); systemAppearance.removeEventListener('change',syncAppearance); delete document.documentElement.dataset.neriAppearance; window.__neriFrame?.destroy(); window.__codexTypingEffects?.dispose(); window.__codexPrismQuota?.destroy(); providerLabelObserver.disconnect(); document.querySelectorAll('[data-neri-top-icon]').forEach(e=>e.removeAttribute('data-neri-top-icon')); document.querySelectorAll('[data-codex-prism-provider-label]').forEach(label => label.removeAttribute('data-codex-prism-provider-label')); clear(); window.__codexPrismPanel?.destroy(); stage?.remove(); frame?.remove(); style?.remove(); button?.remove(); window.removeEventListener('keydown',key,true); window.removeEventListener('keyup',panelKeyUp,true); document.removeEventListener('visibilitychange',visibility); delete window.__codexPrism; },
   };
 })();

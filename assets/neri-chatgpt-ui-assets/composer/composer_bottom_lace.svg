@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 14" width="220" height="14">
+  <!-- Neri Composer Bottom Center Starlight Accent -->
+  <defs>
+    <linearGradient id="cblLine" gradientUnits="userSpaceOnUse" x1="0" y1="7" x2="220" y2="7">
+      <stop offset="0%" stop-color="#D7C3EC" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#E6C2E8" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#FFF2FB" stop-opacity="0.82"/>
+      <stop offset="75%" stop-color="#E6C2E8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#D7C3EC" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <line x1="10" y1="7" x2="96" y2="7" stroke="url(#cblLine)" stroke-width="0.95"/>
+  <line x1="124" y1="7" x2="210" y2="7" stroke="url(#cblLine)" stroke-width="0.95"/>
+
+  <!-- Center diamond & twin starlight dots -->
+  <path d="M 110,3.2 L 113.8,7 L 110,10.8 L 106.2,7 Z" fill="#FCE6F5" opacity="0.85"/>
+  <circle cx="99.5" cy="7" r="1.1" fill="#E8B8DD" opacity="0.72"/>
+  <circle cx="120.5" cy="7" r="1.1" fill="#E8B8DD" opacity="0.72"/>
+</svg>

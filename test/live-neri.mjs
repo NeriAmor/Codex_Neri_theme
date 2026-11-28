@@ -33,8 +33,9 @@ try {
     const fonts=()=>surfaces.map(s=>getComputedStyle(visible(s)).fontFamily);
     const actualFonts=fonts();
     const theme=[...document.querySelectorAll('style')].find(e=>e.textContent.includes('--neri-chrome'));
+    const result={mode:document.documentElement.dataset.neriAppearance,composer:read('[data-composer-surface-variant]'),assistant:read('[data-markdown-text-style="assistant-message"]:not(:empty)'),user:read('[data-user-message-bubble]'),overlay:overlay.pointerEvents,overlayOpacity:overlay.opacity,oldOverlay:oldOverlay.content,gradient:gradient.pointerEvents,gradientImage:gradient.backgroundImage,laceOpacity:lace.opacity,laceHeight:lace.height,composerSvgCount:visible('[data-composer-surface-variant]').querySelectorAll('.neri-composer-decor img').length,oldComposerTrim:trim.content,actualFonts,borders:['[data-composer-surface-variant]','[data-user-message-bubble]','[data-markdown-text-style="assistant-message"]:not(:empty)','#app-shell-sidebar'].map(s=>{const c=getComputedStyle(visible(s));return {selector:s,color:c.borderTopColor,width:c.borderTopWidth};})};
     theme.disabled=true;const nativeFonts=fonts();theme.disabled=false;
-    return {mode:document.documentElement.dataset.neriAppearance,composer:read('[data-composer-surface-variant]'),assistant:read('[data-markdown-text-style="assistant-message"]:not(:empty)'),user:read('[data-user-message-bubble]'),overlay:overlay.pointerEvents,overlayOpacity:overlay.opacity,oldOverlay:oldOverlay.content,gradient:gradient.pointerEvents,gradientImage:gradient.backgroundImage,laceOpacity:lace.opacity,laceHeight:lace.height,trimOpacity:trim.opacity,actualFonts,nativeFonts,borders:['[data-composer-surface-variant]','[data-user-message-bubble]','[data-markdown-text-style="assistant-message"]:not(:empty)','#app-shell-sidebar'].map(s=>{const c=getComputedStyle(visible(s));return {color:c.borderTopColor,width:c.borderTopWidth};})};
+    return {...result,nativeFonts};
   });
   const light=paint.mode==='light',opacity=savedConfig.glassOpacity;
   const colors=light?{composer:'255, 250, 254',assistant:'252, 249, 255',user:'248, 232, 242'}:{composer:'22, 21, 38',assistant:'27, 25, 46',user:'56, 39, 53'};
@@ -46,9 +47,9 @@ try {
   check(light?Number(paint.overlayOpacity)===.4:(Number(paint.overlayOpacity)>=.65&&Number(paint.overlayOpacity)<=.9),'SVG edge opacity follows asset guidance');
   check(paint.oldOverlay==='none','old full-screen frame removed');
   check(Number(paint.laceOpacity)<.35&&parseFloat(paint.laceHeight)<=6,'header lace stays small and faint');
-  check(Number(paint.trimOpacity)===.4,'composer retains subtle trim');
+  check(paint.composerSvgCount===6&&paint.oldComposerTrim==='none','six SVG pieces replace old PNG trim');
   check(light?(paint.gradientImage.includes('0.48')&&paint.gradientImage.match(/0\.16/g)?.length===2):(paint.gradientImage.includes('0.42')&&paint.gradientImage.match(/0\.15/g)?.length===2),'mask darkens the center symmetrically');
-  for(const edge of paint.borders){const alpha=Number(edge.color.match(/,\s*([\d.]+)\)$/)?.[1]);check(parseFloat(edge.width)===0||(alpha>=.08&&alpha<=.14),'container edge must stay subtle or absent: '+edge.color);}
+  for(const edge of paint.borders){const alpha=Number(edge.color.match(/,\s*([\d.]+)\)$/)?.[1]);check(parseFloat(edge.width)===0||(edge.selector.includes('composer')?(alpha>=.08&&alpha<=.65):(alpha>=.08&&alpha<=.14)),'container edge must stay subtle or absent: '+edge.color);}
   check(paint.overlay==='none'&&paint.gradient==='none','full-screen decorations never intercept input');
   report.paint=paint;
   // 按实际叠放顺序合成遮罩、主背景与气泡；不再用已移除的固定透明度冒充当前结果。
@@ -70,8 +71,8 @@ try {
   check(Math.abs(parseFloat(layout.right)-parseFloat(layout.left))<2,'wide chat is centered');
   report.desktop=layout;
   const composer=page.locator('[data-composer-surface-variant] [contenteditable="true"]').filter({visible:true}).last();
-  await composer.click();check(await composer.evaluate(e=>e===document.activeElement),'decoration permits input focus');
-  check(await page.locator('[data-composer-surface-variant]').filter({visible:true}).last().evaluate(e=>getComputedStyle(e).boxShadow.includes('232, 125, 166')),'focus shows pink halo');
+  await composer.click();await page.waitForTimeout(260);check(await composer.evaluate(e=>e===document.activeElement),'decoration permits input focus');
+  check(await page.locator('[data-composer-surface-variant]').filter({visible:true}).last().evaluate((e,color)=>getComputedStyle(e).boxShadow.includes(color),paint.mode==='light'?'163, 49, 104':'216, 94, 166'),'focus shows pink halo');
   await composer.evaluate(e=>e.blur());
   await page.screenshot({path:fileURLToPath(new URL('../artifacts/18-neri-refined-desktop.png',import.meta.url))});
   await session.send('Emulation.setDeviceMetricsOverride',{width:1000,height:850,deviceScaleFactor:1,mobile:false});
